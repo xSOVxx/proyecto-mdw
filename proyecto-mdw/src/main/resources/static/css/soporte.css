@@ -1,0 +1,56 @@
+/* Campo válido: borde verde */
+.is-valid {
+    border-color: #28a745 !important;
+  }
+  
+  /* Campo inválido: borde rojo */
+  .is-invalid {
+    border-color: #dc3545 !important;
+  }
+  
+  /* Mostrar el mensaje de error sólo si el campo es inválido */
+  .is-invalid ~ .invalid-feedback {
+    display: block;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-image: url('https://images.unsplash.com/photo-1614281760335-fd3835d2644b?auto=format&fit=crop&w=1600&q=80'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #212529; /* Texto más oscuro para contraste */
+  }
+  
+  footer {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Textos generales más legibles */
+  h5, h6, p, label, li {
+    color: #212529;
+    font-weight: 500; /* Más grueso */
+  }
+  
+  /* Subtítulos o textos secundarios */
+  .text-muted {
+    color: #495057 !important; /* Gris medio más visible */
+  }
+  
+  /* Títulos destacados */
+  h5, h6 {
+    font-weight: 600;
+    color: #111; /* Casi negro para mejor visibilidad */
+  }
+  
+  /* Etiquetas del formulario */
+  .form-label {
+    font-weight: 500;
+    color: #111;
+  }
+  

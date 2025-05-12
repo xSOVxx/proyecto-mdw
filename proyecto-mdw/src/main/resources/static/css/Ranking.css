@@ -1,0 +1,115 @@
+    /* Estilos generales */
+    body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    }
+
+    /* Estilo del header */
+    header {
+    background-color: #333;
+    padding: 0px 0; /* Aumentamos el padding para que sea más alto */
+    padding-top: 38px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center; /* Centra el contenido del header */
+    align-items: center; /* Alinea verticalmente el contenido */
+    }
+
+    /* Navbar dentro del header */
+    .navbar {
+        width: 100%; /* El navbar ocupa todo el ancho del header */
+        height: 100%; /* El navbar ocupa toda la altura del header */
+        display: flex;
+        justify-content: space-between; /* Distribuye los elementos del navbar */
+        align-items: center; /* Alinea verticalmente los elementos del navbar */
+        padding: 0 15px; /* Espacio lateral para no estar pegado a los bordes */
+        margin-bottom: 35px;
+    }
+    
+
+    /* Navbar Brand */
+    .navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    color: #ffffff !important;
+    }
+
+    /* Navbar Links */
+    .navbar-nav .nav-link {
+    font-size: 1rem;
+    margin-left: 1rem;
+    transition: color 0.2s ease-in-out;
+    }
+
+    .navbar-nav .nav-link:hover {
+    color: #0d6efd !important;
+    }
+
+    /* Hero Section */
+    .hero {
+    background: linear-gradient(to right, #1f1f1f, #2a2a2a);
+    height: 60vh;
+    padding: 2rem;
+    }
+
+    @media (min-width: 992px) {
+    .hero {
+        height: 75vh;
+    }
+
+    .hero h1, .hero p {
+        margin: 0;
+    }
+    }
+
+    /* Tarjetas de juegos */
+    .game-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    }
+
+    .game-card img:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+    }
+
+    .game-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #f8f9fa;
+    margin-top: 0.5rem;
+    text-align: center;
+    }
+
+    .game-description {
+    font-size: 0.9rem;
+    color: #adb5bd;
+    margin-top: 0.25rem;
+    padding: 0 10px;
+    text-align: center;
+    }
+    .mi-footer {
+        background-color: #333;
+        padding: 45px 0;
+        width: 100%;
+        margin-top: auto; /* 💡 Empuja el footer al fondo si el contenido es corto */
+        bottom: 0;
+        left: 0;
+        text-align: center;
+        box-sizing: border-box;
+        z-index: 1030; /* Asegura que esté encima de otros elementos */
+        font-size: 22px;
+
+
+      }
+      
+
+    

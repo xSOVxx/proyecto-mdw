@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>primer avance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/inicio.css">
+    <script src="/static/js/inicio.js" defer></script>
+    <script src="/static/js/soporte.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <!-- Barra de navegación -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="https://png.pngtree.com/png-vector/20190716/ourlarge/pngtree-video-game-icon-trendy-style-isolated-background-png-image_1543043.jpg"
+                        width="70" height="50">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarEpic">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarEpic">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#">Tienda</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Noticias</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/soporte">Soporte</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/ranking">Ranking</a></li>
+
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-secondary" onclick="location.href='login'">
+                                Iniciar Sesión
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- Modal Términos y Condiciones -->
+    <div class="modal fade" id="ModalTerminos" tabindex="-1" aria-labelledby="terminosLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="terminosLabel">Términos y Condiciones</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vehicula diam in mi gravida, nec
+                        dictum ex eleifend. Sed vulputate est in facilisis efficitur. Integer eget odio nec velit
+                        malesuada viverra. Suspendisse potenti. Sed tristique suscipit massa, vitae dignissim arcu.
+                        Donec sodales lorem sed diam cursus, in placerat odio pretium.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fin modales -->
+
+
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://cdn2.unrealengine.com/ch6s2-header-image-2012x1132-e85de33a762f.jpg"
+                    class="d-block w-100" alt="Juego 1">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>FORTNITE</h5>
+                    <p>Juego mas de 650 Millones de Usuarios</p>
+                </div>
+            </div>
+            <div class="carousel-item active">
+                <img src="https://cmsassets.rgpub.io/sanity/images/dsfx7636/content_organization/731216ff2453134e530feabc9dbd3c44e480e352-1200x625.jpg?w=1200&h=630&fm=webp&fit=crop&crop=center"
+                    class="d-block w-100" alt="Juego 2">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Valorant</h5>
+                    <p>Mas de 21 Millones de Usuarios </p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
+    <section class="container my-5" id="juegos">
+        <h2 class="text-center mb-4">Juegos Populares</h2>
+        <div class="row g-4">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card h-100 text-center">
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Juego 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Juego 1</h5>
+                        <p class="card-text">Descripción breve del juego 1.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card h-100 text-center">
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Juego 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Juego 2</h5>
+                        <p class="card-text">Descripción breve del juego 2.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card h-100 text-center">
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Juego 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Juego 3</h5>
+                        <p class="card-text">Descripción breve del juego 3.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container my-5" id="rank">
+        <div class="d-flex justify-content-center flex-wrap mt-4">
+            <div class="mx-3 text-center">
+                <a href="https://example.com/juegos" target="_blank">
+                    <i class="fas fa-gamepad fa-2x"></i>
+                    <p>Juegos</p>
+                </a>
+            </div>
+            <div class="mx-3 text-center">
+                <a href="emeplo" target="_blank">
+                    <i class="fas fa-credit-card fa-2x"></i>
+                    <p>eCards de Juegos</p>
+                </a>
+            </div>
+            <div class="mx-3 text-center">
+                <a href="https://example.com/etarjetas" target="_blank">
+                    <i class="fas fa-gift fa-2x"></i>
+                    <p>eTarjetas</p>
+                </a>
+            </div>
+            <div class="mx-3 text-center">
+                <a href="https://example.com/emoney" target="_blank">
+                    <i class="fas fa-mobile-alt fa-2x"></i>
+                    <p>E-money</p>
+                </a>
+            </div>
+            <div class="mx-3 text-center">
+                <a href="https://example.com/steam" target="_blank">
+                    <i class="fab fa-steam fa-2x"></i>
+                    <p>Steam</p>
+                </a>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center  mi-footer">
+        <small>Proyecto Marcos de desarrollo web 2025.</small>
+    </footer>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="principalScript.js"></script>
+
+</html>

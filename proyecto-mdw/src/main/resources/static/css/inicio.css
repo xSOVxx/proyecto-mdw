@@ -1,0 +1,23 @@
+.carousel-item i {
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+.carousel-item p {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+#iconCarousel .carousel-item div {
+    text-align: center;
+    color: white;
+}
+
+#iconCarousel i {
+    color: white;
+    margin-bottom: 5px;
+}
+
+#iconCarousel p {
+    font-size: 0.9rem;
+    margin: 0;
+}
