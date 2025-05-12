@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/static/css/inicio.css">
     <script src="/static/js/inicio.js" defer></script>
     <script src="/static/js/soporte.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/inicio.css}">
 </head>
 
 <body>
@@ -19,7 +20,7 @@
         <!-- Barra de navegación -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand" href="#">
                     <img src="https://png.pngtree.com/png-vector/20190716/ourlarge/pngtree-video-game-icon-trendy-style-isolated-background-png-image_1543043.jpg"
                         width="70" height="50">
                 </a>
@@ -67,23 +68,21 @@
     </div>
     <!-- fin modales -->
 
-
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://cdn2.unrealengine.com/ch6s2-header-image-2012x1132-e85de33a762f.jpg"
-                    class="d-block w-100" alt="Juego 1">
+                <img src="https://cdn2.unrealengine.com/ch6s2-header-image-2012x1132-e85de33a762f.jpg" class="d-block w-100" alt="FORTNITE">
                 <div class="carousel-caption d-none d-md-block">
+                    <h2 class="text-center">Bienvenido a la Tienda de Juegos</h2>
                     <h5>FORTNITE</h5>
                     <p>Juego mas de 650 Millones de Usuarios</p>
                 </div>
             </div>
-            <div class="carousel-item active">
-                <img src="https://cmsassets.rgpub.io/sanity/images/dsfx7636/content_organization/731216ff2453134e530feabc9dbd3c44e480e352-1200x625.jpg?w=1200&h=630&fm=webp&fit=crop&crop=center"
-                    class="d-block w-100" alt="Juego 2">
+            <div class="carousel-item">
+                <img src="https://cmsassets.rgpub.io/sanity/images/dsfx7636/content_organization/731216ff2453134e530feabc9dbd3c44e480e352-1200x625.jpg?w=1200&h=630&fm=webp&fit=crop&crop=center" class="d-block w-100" alt="Valorant">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Valorant</h5>
-                    <p>Mas de 21 Millones de Usuarios </p>
+                    <p>Mas de 21 Millones de Usuarios</p>
                 </div>
             </div>
         </div>
@@ -97,39 +96,16 @@
         </button>
     </div>
 
+ 
     <section class="container my-5" id="juegos">
         <h2 class="text-center mb-4">Juegos Populares</h2>
         <div class="row g-4">
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div th:each="juego : ${juegos}" class="col-12 col-sm-6 col-lg-4">
                 <div class="card h-100 text-center">
-                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Juego 1">
+                    <img th:src="@{/images/${juego.imagen}}" class="card-img-top" th:alt="${juego.nombre}">
                     <div class="card-body">
-                        <h5 class="card-title">Juego 1</h5>
-                        <p class="card-text">Descripción breve del juego 1.</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="btn btn-primary">Ver más</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100 text-center">
-                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Juego 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Juego 2</h5>
-                        <p class="card-text">Descripción breve del juego 2.</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="btn btn-primary">Ver más</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100 text-center">
-                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Juego 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Juego 3</h5>
-                        <p class="card-text">Descripción breve del juego 3.</p>
+                        <h5 class="card-title" th:text="${juego.nombre}"></h5>
+                        <p class="card-text" th:text="${juego.descripcion}"></p>
                     </div>
                     <div class="card-footer">
                         <a href="#" class="btn btn-primary">Ver más</a>
@@ -142,36 +118,42 @@
     <main class="container my-5" id="rank">
         <div class="d-flex justify-content-center flex-wrap mt-4">
             <div class="mx-3 text-center">
-                <a href="https://example.com/juegos" target="_blank">
+                <a href="#" target="_blank">
                     <i class="fas fa-gamepad fa-2x"></i>
                     <p>Juegos</p>
                 </a>
             </div>
             <div class="mx-3 text-center">
-                <a href="emeplo" target="_blank">
+                <a href="#" target="_blank">
                     <i class="fas fa-credit-card fa-2x"></i>
                     <p>eCards de Juegos</p>
                 </a>
             </div>
             <div class="mx-3 text-center">
-                <a href="https://example.com/etarjetas" target="_blank">
+                <a href="#" target="_blank">
                     <i class="fas fa-gift fa-2x"></i>
                     <p>eTarjetas</p>
                 </a>
             </div>
             <div class="mx-3 text-center">
-                <a href="https://example.com/emoney" target="_blank">
+                <a href="#" target="_blank">
                     <i class="fas fa-mobile-alt fa-2x"></i>
                     <p>E-money</p>
                 </a>
             </div>
             <div class="mx-3 text-center">
-                <a href="https://example.com/steam" target="_blank">
+                <a href="#" target="_blank">
                     <i class="fab fa-steam fa-2x"></i>
                     <p>Steam</p>
                 </a>
             </div>
         </div>
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalTerminos">
+                Términos y Condiciones
+            </button>
+        </div>
+    </div>
     </main>
     <!-- Footer -->
     <footer class="bg-dark text-white text-center  mi-footer">
@@ -182,6 +164,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="principalScript.js"></script>
+<script src="/static/js/inicio.js" defer></script>
+<script th:src="@{/js/inicio.js}"></script>
+
+
 
 </html>
