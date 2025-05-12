@@ -2,7 +2,7 @@
   {
     "nombre": "Fortnite",
     "descripcion": "Juego de batalla campal",
-    "imagen": "https://cdn2.unrealengine.com/fortnite-disney-star-wars-all-1920x1080-296e87fd5954.jpg",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi29RcMx7fsfa6zujHJPlgOLrOCbqb85Qycg&s",
     "ranking": 1,
     "genero": "Battle Royale / Shooter",
     "plataforma": ["PC", "PS4", "PS5", "Xbox One", "Xbox Series X|S", "Switch", "Mobile"],
@@ -13,7 +13,7 @@
   {
     "nombre": "Valorant",
     "descripcion": "Juego de disparos táctico",
-    "imagen": "https://cdn1.epicgames.com/offer/cbd5b3d310a54b12bf3fe8c41994174f/EGS_VALORANT_RiotGames_S1_2560x1440-543b60e5e4a0af08f8001e8faf7e1bc3",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUyEnX_4k1H5U2uDJu2HYDGdjAz7j9qzDug&s",
     "ranking": 2,
     "genero": "Hero Shooter / FPS",
     "plataforma": ["PC"],
@@ -35,7 +35,7 @@
   {
     "nombre": "Rocket League",
     "descripcion": "Fútbol con autos en arenas futuristas",
-    "imagen": "https://cdn1.epicgames.com/offer/9773aa1aa54f4f7b80e44bef04986cea/EGS_RocketLeague_PsyonixLLC_S3_2560x1440-18eac9b5df1028fdcd5bad480ab6b085",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbhZTPP6e2MtAOqMqmLVKlQS9BdLQix-2ABA&s",
     "ranking": 4,
     "genero": "Deportes / Acción",
     "plataforma": ["PC", "PS4", "PS5", "Xbox One", "Xbox Series X|S", "Switch"],
@@ -57,7 +57,7 @@
   {
     "nombre": "The Lord of the Rings: Return to Moria",
     "descripcion": "Juego de supervivencia y crafting ambientado en la Tierra Media",
-    "imagen": "https://cdn1.epicgames.com/spt-assets/2ae760629a384d5199cbefc612db7ac8/the-lord-of-the-rings-return-to-moria-rxsxh.jpg",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZJ2iJtIYFF7zr9mP-ORGdgbWNHbc0IzmiDQ&s",
     "ranking": 6,
     "genero": "Supervivencia / Crafting",
     "plataforma": ["PC", "PS5", "Xbox Series X|S"],
@@ -68,7 +68,7 @@
   {
     "nombre": "LEGO Fortnite",
     "descripcion": "Versión creativa de Fortnite en el mundo LEGO",
-    "imagen": "https://cdn2.unrealengine.com/lego-fortnite-social-1920x1080-68be5a5756df.jpg",
+    "imagen": "https://www.lego.com/cdn/cs/set/assets/bltd7674784af9f44a4/01-MixedContentBlock-Juno_SocialSharing.jpg",
     "ranking": 7,
     "genero": "Sandbox / Supervivencia",
     "plataforma": ["PC", "PS4", "PS5", "Xbox One", "Xbox Series X|S", "Switch", "Mobile"],
@@ -79,7 +79,7 @@
   {
     "nombre": "The Last of Us Part II",
     "descripcion": "Secuela del aclamado juego de acción y aventura",
-    "imagen": "https://image.api.playstation.com/vulcan/ap/rnd/202312/0117/da083fa5e19458dd750aa8a6ea30ba10bac6f87074693df5.jpg",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzlhi4VxZmD1dnTFtQ1Ubx3nbaiGd0wszxZQ&s",
     "ranking": 8,
     "genero": "Acción-Aventura / Survival",
     "plataforma": ["PS4", "PS5"],
@@ -90,7 +90,7 @@
   {
     "nombre": "The Wolf Among Us",
     "descripcion": "Juego narrativo basado en la serie de cómics Fables",
-    "imagen": "https://cdn2.unrealengine.com/Diesel/productv2/wolf-among-us/home/EGS_LCGEntertainmentInc_TheWolfAmongUs_S1-2560x1440-20d0d307c8316a6f424ff083013c03a3b2bef390.jpg",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL-3ZhSrflYcG6-cRJYqc3HsTbhRS6SHrhNA&s",
     "ranking": 9,
     "genero": "Aventura Gráfica / Narrativa",
     "plataforma": ["PC", "PS4", "Xbox One", "iOS", "Android"],
