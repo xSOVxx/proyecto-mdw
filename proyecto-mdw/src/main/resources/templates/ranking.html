@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ranking de los más Jugados</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/Ranking.css">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body fixed-top shadow">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img
+            src="https://png.pngtree.com/png-vector/20190716/ourlarge/pngtree-video-game-icon-trendy-style-isolated-background-png-image_1543043.jpg"
+            width="60" height="45" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarEpic">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarEpic">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="/soporte">Soporte</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/ranking">Ranking</a></li>
+            <li class="nav-item">
+              <button type="button" class="btn btn-secondary ms-lg-3 mt-2 mt-lg-0" onclick="location.href='/login'">
+                Iniciar Sesión
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container my-5">
+    <h2 class="text-center mb-4 text-light">Ranking de los más Jugados</h2>
+    <div class="row g-4">
+      <th:block th:each="juego : ${juegos}">
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="card h-100 text-center game-card">
+            <img th:src="${juego.imagen}" class="card-img-top" th:alt="${juego.nombre}">
+            <div class="card-body">
+              <h5 class="card-title game-title" th:text="${juego.nombre}"></h5>
+              <p class="card-text game-description" th:text="${juego.descripcion}"></p>
+              <p><strong>Género:</strong> <span th:text="${juego.genero}"></span></p>
+              <p><strong>Plataformas:</strong>
+                <span th:each="plat, iterStat : ${juego.plataforma}">
+                  <span th:text="${plat}"></span><span th:if="${!iterStat.last}">, </span>
+                </span>
+              </p>
+              <p><strong>Lanzamiento:</strong> <span th:text="${juego.lanzamiento}"></span></p>
+              <p><strong>Calificación:</strong> <span th:text="${juego.calificacion}"></span> ⭐</p>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center">
+              <span class="badge bg-primary" th:text="'#' + ${juego.ranking}"></span>
+              <a th:if="${juego.enlace}" th:href="${juego.enlace}" target="_blank" class="btn btn-outline-info btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="Ir al sitio oficial">Ver más</a>
+            </div>
+          </div>
+        </div>
+      </th:block>
+    </div>
+  </main>
+
+  <footer class="mi-footer text-center">
+    <small>&copy; Proyecto Marcos de Desarrollo Web - 2025</small>
+  </footer>
+  <script src="/js/ranking.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
