@@ -16,9 +16,5 @@ public class MainController {
         return "soporte"; // Redirige a soporte.html
     }
 
-    @GetMapping("/ranking")
-    public String ranking() {
-        return "Ranking"; // Redirige a Ranking.html
-    }
 
 }
