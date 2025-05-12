@@ -21,13 +21,4 @@ public class MainController {
         return "Ranking"; // Redirige a Ranking.html
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login"; // Redirige a login.html
-    }
-
-    @GetMapping("/register")
-    public String register() {
-        return "register"; // Redirige a register.html
-    }
 }

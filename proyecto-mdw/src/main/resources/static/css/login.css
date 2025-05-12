@@ -8,6 +8,19 @@ background: #eee;
 .h-custom {
 height: calc(100% - 73px);
 }
+.vh-100 {
+  padding-top: 73px; /* Ajusta este valor si la altura de tu navbar es diferente */
+  flex-grow: 1;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.container-fluid.h-custom {
+  margin-top: 20px; /* Ajusta este valor al margen que desees */
+}
+
 @media (max-width: 450px) {
 .h-custom {
 height: 100%;
