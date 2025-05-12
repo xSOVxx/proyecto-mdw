@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "compras": {
       "metodos_pago": [
@@ -20,4 +21,28 @@
     "contacto": {
       "mensaje": "¿No encontraste lo que buscabas? Contáctanos a través de nuestro formulario."
     }
+=======
+{
+    "compras": {
+      "metodos_pago": [
+        {"metodo": "Visa", "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"},
+        {"metodo": "MasterCard", "logo": "https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png"},
+        {"metodo": "PayPal", "logo": "https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"}
+      ],
+      "facturacion": "Recibirás automáticamente una factura al correo electrónico registrado."
+    },
+    "cuenta": {
+      "cambiar_contrasena": "Recomendamos actualizar tu contraseña periódicamente.",
+      "actualizar_datos": "Puedes modificar tu nombre, correo electrónico u otros datos en cualquier momento.",
+      "cerrar_sesion": "Recuerda cerrar sesión en dispositivos compartidos."
+    },
+    "juegos": {
+      "descargas": "Aprende cómo descargar e instalar tus juegos favoritos.",
+      "errores_frecuentes": "Soluciones a errores comunes durante la instalación o el juego.",
+      "actualizaciones": "Mantén tus juegos actualizados para disfrutar de nuevas características."
+    },
+    "contacto": {
+      "mensaje": "¿No encontraste lo que buscabas? Contáctanos a través de nuestro formulario."
+    }
+>>>>>>> c31f8334a885ff318b274a9366731f11dd13e29e
   }
