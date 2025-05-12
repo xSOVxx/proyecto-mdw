@@ -21,3 +21,7 @@
     font-size: 0.9rem;
     margin: 0;
 }
+.card-img-top {
+    height: 200px; /* Ajusta la altura según sea necesario */
+    object-fit: cover; /* Asegura que las imágenes se recorten proporcionalmente */
+}

@@ -102,7 +102,7 @@
         <div class="row g-4">
             <div th:each="juego : ${juegos}" class="col-12 col-sm-6 col-lg-4">
                 <div class="card h-100 text-center">
-                    <img th:src="@{/images/${juego.imagen}}" class="card-img-top" th:alt="${juego.nombre}">
+                    <img th:src="@{'/images/' + ${juego.imagen}}" class="card-img-top" th:alt="${juego.nombre}">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${juego.nombre}"></h5>
                         <p class="card-text" th:text="${juego.descripcion}"></p>
@@ -114,7 +114,6 @@
             </div>
         </div>
     </section>
-
     <main class="container my-5" id="rank">
         <div class="d-flex justify-content-center flex-wrap mt-4">
             <div class="mx-3 text-center">

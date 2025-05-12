@@ -1,0 +1,17 @@
+[
+  {
+    "nombre": "Fortnite",
+    "descripcion": "Juego de batalla campal",
+    "imagen": "juego1.avif"
+  },
+  {
+    "nombre": "Valorant",
+    "descripcion": "Juego de disparos táctico",
+    "imagen": "juego2.jpg"
+  },
+  {
+    "nombre": "Minecraft",
+    "descripcion": "Juego de construcción y aventuras",
+    "imagen": "juego3.jpg"
+  }
+]
