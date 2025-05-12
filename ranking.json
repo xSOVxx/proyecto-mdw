@@ -1,0 +1,101 @@
+[
+  {
+    "nombre": "Fortnite",
+    "descripcion": "Juego de batalla campal",
+    "imagen": "https://cdn2.unrealengine.com/fortnite-disney-star-wars-all-1920x1080-296e87fd5954.jpg",
+    "ranking": 1,
+    "genero": "Battle Royale / Shooter",
+    "plataforma": ["PC", "PS4", "PS5", "Xbox One", "Xbox Series X|S", "Switch", "Mobile"],
+    "lanzamiento": "2017-07-21",
+    "calificacion": 4.7,
+    "enlace": "https://www.epicgames.com/fortnite/"
+  },
+  {
+    "nombre": "Valorant",
+    "descripcion": "Juego de disparos táctico",
+    "imagen": "https://cdn1.epicgames.com/offer/cbd5b3d310a54b12bf3fe8c41994174f/EGS_VALORANT_RiotGames_S1_2560x1440-543b60e5e4a0af08f8001e8faf7e1bc3",
+    "ranking": 2,
+    "genero": "Hero Shooter / FPS",
+    "plataforma": ["PC"],
+    "lanzamiento": "2020-06-02",
+    "calificacion": 4.5,
+    "enlace": "https://playvalorant.com/"
+  },
+  {
+    "nombre": "Genshin Impact",
+    "descripcion": "Juego de exploración y rol de acción en mundo abierto",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTglt8efxtW_wHjgxJJEODKDJaMFzO9--fj5I7O8qCmI3EP2DFACkLnbty2wySZACxfUBsS",
+    "ranking": 3,
+    "genero": "Action-RPG / Gacha",
+    "plataforma": ["PC", "PS4", "PS5", "Android", "iOS"],
+    "lanzamiento": "2020-09-28",
+    "calificacion": 4.6,
+    "enlace": "https://genshin.hoyoverse.com/"
+  },
+  {
+    "nombre": "Rocket League",
+    "descripcion": "Fútbol con autos en arenas futuristas",
+    "imagen": "https://cdn1.epicgames.com/offer/9773aa1aa54f4f7b80e44bef04986cea/EGS_RocketLeague_PsyonixLLC_S3_2560x1440-18eac9b5df1028fdcd5bad480ab6b085",
+    "ranking": 4,
+    "genero": "Deportes / Acción",
+    "plataforma": ["PC", "PS4", "PS5", "Xbox One", "Xbox Series X|S", "Switch"],
+    "lanzamiento": "2015-07-07",
+    "calificacion": 4.4,
+    "enlace": "https://www.rocketleague.com/"
+  },
+  {
+    "nombre": "Alan Wake 2",
+    "descripcion": "Thriller de horror psicológico en tercera persona",
+    "imagen": "https://www.alanwake.com/wp-content/uploads/2023/05/aw2-standard.png",
+    "ranking": 5,
+    "genero": "Survival Horror / Acción-Aventura",
+    "plataforma": ["PC", "PS5", "Xbox Series X|S"],
+    "lanzamiento": "2023-10-27",
+    "calificacion": 4.5,
+    "enlace": "https://www.alanwake.com/"
+  },
+  {
+    "nombre": "The Lord of the Rings: Return to Moria",
+    "descripcion": "Juego de supervivencia y crafting ambientado en la Tierra Media",
+    "imagen": "https://cdn1.epicgames.com/spt-assets/2ae760629a384d5199cbefc612db7ac8/the-lord-of-the-rings-return-to-moria-rxsxh.jpg",
+    "ranking": 6,
+    "genero": "Supervivencia / Crafting",
+    "plataforma": ["PC", "PS5", "Xbox Series X|S"],
+    "lanzamiento": "2023-10-24",
+    "calificacion": 4.0,
+    "enlace": "https://returntomoria.com/"
+  },
+  {
+    "nombre": "LEGO Fortnite",
+    "descripcion": "Versión creativa de Fortnite en el mundo LEGO",
+    "imagen": "https://cdn2.unrealengine.com/lego-fortnite-social-1920x1080-68be5a5756df.jpg",
+    "ranking": 7,
+    "genero": "Sandbox / Supervivencia",
+    "plataforma": ["PC", "PS4", "PS5", "Xbox One", "Xbox Series X|S", "Switch", "Mobile"],
+    "lanzamiento": "2023-12-07",
+    "calificacion": 4.4,
+    "enlace": "https://www.fortnite.com/lego"
+  },
+  {
+    "nombre": "The Last of Us Part II",
+    "descripcion": "Secuela del aclamado juego de acción y aventura",
+    "imagen": "https://image.api.playstation.com/vulcan/ap/rnd/202312/0117/da083fa5e19458dd750aa8a6ea30ba10bac6f87074693df5.jpg",
+    "ranking": 8,
+    "genero": "Acción-Aventura / Survival",
+    "plataforma": ["PS4", "PS5"],
+    "lanzamiento": "2020-06-19",
+    "calificacion": 4.8,
+    "enlace": "https://www.playstation.com/games/the-last-of-us-part-ii/"
+  },
+  {
+    "nombre": "The Wolf Among Us",
+    "descripcion": "Juego narrativo basado en la serie de cómics Fables",
+    "imagen": "https://cdn2.unrealengine.com/Diesel/productv2/wolf-among-us/home/EGS_LCGEntertainmentInc_TheWolfAmongUs_S1-2560x1440-20d0d307c8316a6f424ff083013c03a3b2bef390.jpg",
+    "ranking": 9,
+    "genero": "Aventura Gráfica / Narrativa",
+    "plataforma": ["PC", "PS4", "Xbox One", "iOS", "Android"],
+    "lanzamiento": "2013-10-11",
+    "calificacion": 4.3,
+    "enlace": "https://telltale.com/the-wolf-among-us/"
+  }
+]
