@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+/* <<<<<<< HEAD
 package com.example.proyecto_mdw.model;
 
 public class MetodoPago {
@@ -49,3 +49,4 @@ public class MetodoPago {
     }
 }
 >>>>>>> c31f8334a885ff318b274a9366731f11dd13e29e
+ */
