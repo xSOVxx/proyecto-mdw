@@ -1,5 +1,5 @@
 
-/*package com.example.proyecto_mdw.model;
+package com.example.proyecto_mdw.model;
 
 import java.util.List;
 
@@ -88,4 +88,3 @@ public class soportemodel {
         this.mensaje = mensaje;
     }
 }
-*/
