@@ -1,4 +1,4 @@
-package com.example.proyecto_mdw.controller;
+/*package com.example.proyecto_mdw.controller;
 
 import com.example.proyecto_mdw.model.soportemodel;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,3 +32,4 @@ public class SoporteController {
         }
     }
 }
+*/

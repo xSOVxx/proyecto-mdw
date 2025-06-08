@@ -1,33 +1,49 @@
 package com.example.proyecto_mdw.controller;
 
-import java.io.InputStream;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.proyecto_mdw.model.Juego;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.proyecto_mdw.service.RankingService;
 
 @Controller
 public class RankingController {
 
+    @Autowired
+    private RankingService rankingService;
+
     @GetMapping("/ranking")
     public String mostrarRanking(Model model) {
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            InputStream is = new ClassPathResource("static/data/ranking.json").getInputStream();
-            List<Juego> juegos = mapper.readValue(is, new TypeReference<List<Juego>>() {});
-            Collections.sort(juegos, Comparator.comparingInt(Juego::getRanking));
+            List<Juego> juegos = rankingService.obtenerJuegosRanking();
             model.addAttribute("juegos", juegos);
         } catch (Exception e) {
             model.addAttribute("juegos", Collections.emptyList());
+            model.addAttribute("error", "Error al cargar datos: " + e.getMessage());
         }
-        return "Ranking";
+        return "ranking"; // Mantenemos el nombre de la vista para no afectar rutas
+    }
+    
+    @GetMapping("/ranking/juego/{id}")
+    public String detalleJuego(@PathVariable Long id, Model model) {
+        try {
+            Optional<Juego> juego = rankingService.obtenerJuegoPorId(id);
+            if (juego.isPresent()) {
+                model.addAttribute("juego", juego.get());
+                return "detalle-juego";
+            } else {
+                return "redirect:/ranking";
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al cargar el juego: " + e.getMessage());
+            return "redirect:/ranking";
+        }
     }
 }
