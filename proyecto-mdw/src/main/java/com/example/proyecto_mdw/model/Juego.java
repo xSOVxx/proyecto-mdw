@@ -2,45 +2,99 @@ package com.example.proyecto_mdw.model;
 
 import java.util.List;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+
+@Entity
 public class Juego {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
     private String nombre;
     private String descripcion;
     private String imagen;
-    private int ranking;
-    private String genero;
-    private List<String> plataforma;
-    private String lanzamiento;
-    private double calificacion;
-    private String enlace;
-
+    private double precio;
+    private String categoria;
+    private String fechaLanzamiento;
+    
+    @ElementCollection
+    @CollectionTable(name = "juego_plataformas", joinColumns = @JoinColumn(name = "juego_id"))
+    @Column(name = "plataforma")
+    private List<String> plataformas;
+    
+    // Constructor vacío requerido por JPA
     public Juego() {}
-
-    // Puedes agregar un constructor completo si lo necesitas
-
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-
-    public String getImagen() { return imagen; }
-    public void setImagen(String imagen) { this.imagen = imagen; }
-
-    public int getRanking() { return ranking; }
-    public void setRanking(int ranking) { this.ranking = ranking; }
-
-    public String getGenero() { return genero; }
-    public void setGenero(String genero) { this.genero = genero; }
-
-    public List<String> getPlataforma() { return plataforma; }
-    public void setPlataforma(List<String> plataforma) { this.plataforma = plataforma; }
-
-    public String getLanzamiento() { return lanzamiento; }
-    public void setLanzamiento(String lanzamiento) { this.lanzamiento = lanzamiento; }
-
-    public double getCalificacion() { return calificacion; }
-    public void setCalificacion(double calificacion) { this.calificacion = calificacion; }
-
-    public String getEnlace() { return enlace; }
-    public void setEnlace(String enlace) { this.enlace = enlace; }
+    
+    // Getters y setters
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public String getDescripcion() {
+        return descripcion;
+    }
+    
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
+    public String getImagen() {
+        return imagen;
+    }
+    
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+    
+    public double getPrecio() {
+        return precio;
+    }
+    
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+    
+    public String getCategoria() {
+        return categoria;
+    }
+    
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+    
+    public List<String> getPlataformas() {
+        return plataformas;
+    }
+    
+    public void setPlataformas(List<String> plataformas) {
+        this.plataformas = plataformas;
+    }
+    
+    public String getFechaLanzamiento() {
+        return fechaLanzamiento;
+    }
+    
+    public void setFechaLanzamiento(String fechaLanzamiento) {
+        this.fechaLanzamiento = fechaLanzamiento;
+    }
 }

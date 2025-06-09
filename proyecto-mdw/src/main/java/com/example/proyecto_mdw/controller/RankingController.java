@@ -1,33 +1,33 @@
 package com.example.proyecto_mdw.controller;
 
-import java.io.InputStream;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import com.example.proyecto_mdw.model.Juego;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.proyecto_mdw.model.RankingItem;
+import com.example.proyecto_mdw.service.RankingService;
 
 @Controller
 public class RankingController {
 
+    @Autowired
+    private RankingService rankingService;
+    
     @GetMapping("/ranking")
     public String mostrarRanking(Model model) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            InputStream is = new ClassPathResource("static/data/ranking.json").getInputStream();
-            List<Juego> juegos = mapper.readValue(is, new TypeReference<List<Juego>>() {});
-            Collections.sort(juegos, Comparator.comparingInt(Juego::getRanking));
-            model.addAttribute("juegos", juegos);
-        } catch (Exception e) {
-            model.addAttribute("juegos", Collections.emptyList());
-        }
-        return "Ranking";
+        List<RankingItem> juegosRankeados = rankingService.obtenerTodosLosJuegosRankeados();
+        model.addAttribute("juegos", juegosRankeados);
+        return "ranking";
+    }
+    
+    @GetMapping("/ranking/{ranking}")
+    public String mostrarDetalleJuegoRankeado(@PathVariable int ranking, Model model) {
+        rankingService.buscarPorRanking(ranking)
+            .ifPresent(juego -> model.addAttribute("juego", juego));
+        return "detalle-ranking";
     }
 }
