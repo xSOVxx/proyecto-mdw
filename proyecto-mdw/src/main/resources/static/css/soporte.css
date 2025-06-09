@@ -24,19 +24,28 @@
   display: block;
 }
 
+
+
+
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 
-  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+  background-color: #121212;
+  /* Este es el color actual del fondo de soporte */
+  color: #f5f5f5;
+  padding-top: 80px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  background: linear-gradient(135deg, #191b1a 0%, #000509 100%);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   font-family: 'Poppins', sans-serif;
   padding-top: 80px;
 
-  color: #eeeeee;
+  color: #000000;
 }
 
 
@@ -47,22 +56,31 @@ body {
 
 
 h1 {
-    color: #00adb5; 
-    text-shadow: 1px 1px 2px rgba(230, 223, 223, 0.5); 
+  color: #00adb5;
+  text-shadow: 1px 1px 2px rgba(230, 223, 223, 0.5);
 }
 
 
-h2, h3, h4 {
-    color: #00adb5; 
+h2,
+h3,
+h4 {
+  color: #00adb5;
 }
 
-h5, h6, p, label, li {
-    color: #c1c8ce; 
-    font-weight: 500;
+h5,
+h6,
+p,
+label,
+li {
+  color: #c1c8ce;
+  font-weight: 500;
 }
-h5, h6 {
-    font-weight: 600;
-    color: #e2dcdc; /* Casi negro para mejor visibilidad */
+
+h5,
+h6 {
+  font-weight: 600;
+  color: #e2dcdc;
+  /* Casi negro para mejor visibilidad */
 }
 
 /* Etiquetas del formulario */
@@ -82,7 +100,7 @@ h5, h6 {
 }
 
 .accordion .card-header {
-  background: #393e46;
+  background: #495260;
   border-bottom: none;
   padding: 0;
 }
