@@ -3,7 +3,7 @@ package com.example.proyecto_mdw.model;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty; // Importar si los nombres del JSON no coinciden con las variables
 
-public class Soportemodel { // Recomiendo cambiar a Soportemodel con 'S' mayúscula para seguir convenciones de Java (Clase en PascalCase)
+public class SoporteModel { 
 
     // Propiedades de alto nivel que mapean a los objetos principales del JSON
     private Compras compras;
