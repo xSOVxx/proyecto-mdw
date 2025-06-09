@@ -1,8 +1,8 @@
 package com.example.proyecto_mdw.controller;
 
 import com.example.proyecto_mdw.model.Usuario;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.proyecto_mdw.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,37 +17,10 @@ import java.util.regex.Pattern;
 @Controller
 public class AuthController {
 
-    private static final String USUARIOS_JSON = "src/main/resources/static/data/usuarios.json";
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    private List<Usuario> cargarUsuarios() {
-        try {
-            File file = new File(USUARIOS_JSON);
-            if (file.exists()) {
-                return objectMapper.readValue(file, new TypeReference<List<Usuario>>() {});
-            } else {
-                return new ArrayList<>();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
-
-    private void guardarUsuarios(List<Usuario> usuarios) {
-        try {
-            File directory = new File("src/main/resources/static/data");
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-            objectMapper.writeValue(new File(USUARIOS_JSON), usuarios);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     private boolean validarCorreo(String correo) {
-        // Expresión regular para validar un correo electrónico básico
         String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(correo);
@@ -58,7 +28,6 @@ public class AuthController {
     }
 
     private boolean validarContrasena(String contrasena) {
-        // Aquí puedes agregar validaciones más robustas para la contraseña
         return contrasena != null && contrasena.length() >= 6;
     }
 
@@ -69,18 +38,42 @@ public class AuthController {
 
     @PostMapping("/register")
     public String registrarUsuario(@RequestParam String usuario,
-                                    @RequestParam String correo,
-                                    @RequestParam String contrasena,
-                                    @RequestParam String confirmarContrasena,
-                                    Model model) {
+                                   @RequestParam String correo,
+                                   @RequestParam String contrasena,
+                                   @RequestParam String confirmarContrasena,
+                                   Model model) {
+
+        if (usuario == null || usuario.trim().isEmpty() || usuario.length() < 3 || !usuario.matches("^[A-Za-z0-9]+$")) {
+            model.addAttribute("errorUsuario", "El usuario debe tener al menos 3 caracteres y solo letras o números.");
+            return "register";
+        }
+
+        if (correo == null || correo.trim().isEmpty()) {
+            model.addAttribute("errorCorreo", "El correo electrónico no puede estar vacío.");
+            return "register";
+        }
 
         if (!validarCorreo(correo)) {
             model.addAttribute("errorCorreo", "Por favor, ingresa un correo electrónico válido.");
             return "register";
         }
 
-        if (!validarContrasena(contrasena)) {
-            model.addAttribute("errorContrasena", "La contraseña debe tener al menos 6 caracteres.");
+        if (!(correo.endsWith(".com") || correo.endsWith(".net"))) {
+            model.addAttribute("errorCorreo", "El correo debe terminar en .com o .net.");
+            return "register";
+        }
+
+        if (contrasena == null || contrasena.length() < 8 ||
+            !contrasena.matches(".*[A-Z].*") ||
+            !contrasena.matches(".*[a-z].*") ||
+            !contrasena.matches(".*\\d.*") ||
+            !contrasena.matches(".*[^A-Za-z0-9].*")) {
+            model.addAttribute("errorContrasena", "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y símbolos.");
+            return "register";
+        }
+
+        if (contrasena.toLowerCase().contains(usuario.toLowerCase()) || contrasena.toLowerCase().contains(correo.toLowerCase())) {
+            model.addAttribute("errorContrasena", "La contraseña no debe contener el usuario ni el correo.");
             return "register";
         }
 
@@ -89,16 +82,14 @@ public class AuthController {
             return "register";
         }
 
-        List<Usuario> usuarios = cargarUsuarios();
-        if (usuarios.stream().anyMatch(u -> u.getUsuario().equals(usuario) || u.getCorreo().equals(correo))) {
+        if (usuarioRepository.findByUsuario(usuario).isPresent() || usuarioRepository.findByCorreo(correo).isPresent()) {
             model.addAttribute("errorRegistro", "El usuario o el correo electrónico ya están registrados.");
             return "register";
         }
 
-        usuarios.add(new Usuario(usuario, correo, contrasena));
-        guardarUsuarios(usuarios);
+        usuarioRepository.save(new Usuario(usuario, correo, contrasena));
         model.addAttribute("mensajeRegistroExitoso", "¡Registro exitoso! Ahora puedes iniciar sesión.");
-        return "login"; // Redirigimos al login después del registro exitoso
+        return "login";
     }
 
     @GetMapping("/login")
@@ -111,7 +102,7 @@ public class AuthController {
                                @RequestParam String contrasena,
                                Model model,
                                RedirectAttributes redirectAttributes) {
-        List<Usuario> usuarios = cargarUsuarios();
+        List<Usuario> usuarios = usuarioRepository.findAll();
         Usuario usuarioAutenticado = usuarios.stream()
                 .filter(u -> u.getCorreo().equals(correo) && u.getContrasena().equals(contrasena))
                 .findFirst()

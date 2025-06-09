@@ -1,8 +1,21 @@
 package com.example.proyecto_mdw.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
-   private String usuario;
+    @Id
+    @Column(length = 50)
+    private String usuario;
+
+    @Column(nullable = false, unique = true, length = 100)
     private String correo;
+
+    @Column(nullable = false)
     private String contrasena;
 
     public Usuario() {
@@ -40,10 +53,6 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "usuario='" + usuario + '\'' +
-                ", correo='" + correo + '\'' +
-                ", contrasena='" + contrasena + '\'' +
-                '}';
+        return "Usuario [usuario=" + usuario + ", correo=" + correo + "]";
     }
 }
