@@ -1,5 +1,6 @@
 package com.example.proyecto_mdw.config;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.proyecto_mdw.model.Juego;
 import com.example.proyecto_mdw.repository.JuegoRepository;
+import com.example.proyecto_mdw.service.JuegoService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -18,26 +20,33 @@ public class DataLoader implements CommandLineRunner {
 
     @Autowired
     private JuegoRepository juegoRepository;
+    
+    @Autowired
+    private JuegoService juegoService;
 
     @Override
     public void run(String... args) throws Exception {
-        // Cargar datos desde el JSON al iniciar la aplicación solo si la BD está vacía
+        // Solo cargar datos si la base de datos está vacía
         if (juegoRepository.count() == 0) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                InputStream is = new ClassPathResource("static/data/ranking.json").getInputStream();
+                InputStream is = new ClassPathResource("static/data/juegos.json").getInputStream();
                 List<Juego> juegos = mapper.readValue(is, new TypeReference<List<Juego>>() {});
                 
-                // Guardar los juegos en la base de datos
-                juegoRepository.saveAll(juegos);
+                System.out.println("📚 Cargando " + juegos.size() + " juegos desde juegos.json...");
                 
-                System.out.println("✅ Datos cargados en la base de datos: " + juegoRepository.count() + " juegos");
-            } catch (Exception e) {
+                // Guardar en base de datos
+                for (Juego juego : juegos) {
+                    juegoService.guardar(juego);
+                }
+                
+                System.out.println("✅ Datos iniciales cargados en la base de datos");
+            } catch (IOException e) {
                 System.err.println("❌ Error al cargar datos iniciales: " + e.getMessage());
                 e.printStackTrace();
             }
         } else {
-            System.out.println("ℹ️ La base de datos ya contiene datos. No se cargarán datos iniciales.");
+            System.out.println("ℹ️ La base de datos ya contiene datos");
         }
     }
 }

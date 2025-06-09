@@ -1,0 +1,55 @@
+[ {
+  "id" : 1,
+  "nombre" : "Fortnite",
+  "descripcion" : "Juego de batalla campal con elementos de construcción donde 100 jugadores luchan para ser el último en pie.",
+  "imagen" : "juego1.avif",
+  "precio" : 19.99,
+  "categoria" : "Acción",
+  "fechaLanzamiento" : "2017-07-21",
+  "plataformas" : [ "PC", "PlayStation 5", "Xbox Series X|S", "Nintendo Switch" ]
+}, {
+  "id" : 2,
+  "nombre" : "Valorant",
+  "descripcion" : "Juego de disparos táctico 5v5 basado en personajes con habilidades especiales y precisión de disparo.",
+  "imagen" : "juego2.jpg",
+  "precio" : 19.99,
+  "categoria" : "Acción",
+  "fechaLanzamiento" : "2020-06-02",
+  "plataformas" : [ "PC" ]
+}, {
+  "id" : 3,
+  "nombre" : "Minecraft",
+  "descripcion" : "Juego de construcción y aventuras en un mundo abierto generado proceduralmente con infinitas posibilidades.",
+  "imagen" : "juego3.jpg",
+  "precio" : 29.99,
+  "categoria" : "Aventura",
+  "fechaLanzamiento" : "2011-11-18",
+  "plataformas" : [ "PC", "PlayStation 5", "Xbox Series X|S", "Nintendo Switch" ]
+}, {
+  "id" : 4,
+  "nombre" : "The Witcher 3: Wild Hunt",
+  "descripcion" : "Épico juego de rol de mundo abierto con una trama envolvente y decisiones que afectan el desarrollo del juego.",
+  "imagen" : "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg",
+  "precio" : 39.99,
+  "categoria" : "RPG",
+  "fechaLanzamiento" : "2015-05-19",
+  "plataformas" : [ "PC", "PlayStation 5", "Xbox Series X|S", "Nintendo Switch" ]
+}, {
+  "id" : 5,
+  "nombre" : "FIFA 23",
+  "descripcion" : "El simulador de fútbol más popular con licencias oficiales, modos de juego variados y gráficos realistas.",
+  "imagen" : "https://image.api.playstation.com/vulcan/ap/rnd/202207/0515/lGWMgRzIGnvVxrVwwk8Qqt7O.png",
+  "precio" : 59.99,
+  "categoria" : "Deportes",
+  "fechaLanzamiento" : "2022-09-30",
+  "plataformas" : [ "PC", "PlayStation 5", "Xbox Series X|S" ]
+}, {
+  "id" : 6,
+  "nombre" : "Age of Empires IV",
+  "descripcion" : "Juego de estrategia en tiempo real que permite revivir batallas épicas que moldearon la historia mundial.",
+  "imagen" : "https://cdn.cloudflare.steamstatic.com/steam/apps/1466860/header.jpg",
+  "precio" : 49.99,
+  "categoria" : "Estrategia",
+  "fechaLanzamiento" : "2021-10-28",
+  "plataformas" : [ "PC" ]
+} ]
