@@ -1,178 +1,189 @@
 .is-valid {
-    border-color: #28a745 !important;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.07.4-1.5 1.1-1.3l.9.3c.7.2 1.4-.4 1.7-1.1L5.9.6c.4-.7 1.1-.9 1.5-.2l.3.4c.4.7-.2 1.4-.9 1.7L4.4 3.73c-.7.3-1.4.1-1.7-.6z'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: center right calc(0.375em + 0.1875rem);
-    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-    padding-right: calc(1.5em + 0.75rem); /* Necesario para el icono */
+  border-color: #28a745 !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.07.4-1.5 1.1-1.3l.9.3c.7.2 1.4-.4 1.7-1.1L5.9.6c.4-.7 1.1-.9 1.5-.2l.3.4c.4.7-.2 1.4-.9 1.7L4.4 3.73c-.7.3-1.4.1-1.7-.6z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center right calc(0.375em + 0.1875rem);
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  padding-right: calc(1.5em + 0.75rem);
+  /* Necesario para el icono */
 }
 
 .is-invalid {
-    border-color: #dc3545 !important;
-    /* Asegurar que los íconos de validación de Bootstrap funcionen con el tema oscuro */
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23dc3545' d='M1.5 1.5L4 4L6.5 1.5L4 4L6.5 6.5L4 4L1.5 6.5L4 4L1.5 1.5z'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: center right calc(0.375em + 0.1875rem);
-    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-    padding-right: calc(1.5em + 0.75rem); /* Necesario para el icono */
+  border-color: #dc3545 !important;
+  /* Asegurar que los íconos de validación de Bootstrap funcionen con el tema oscuro */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23dc3545' d='M1.5 1.5L4 4L6.5 1.5L4 4L6.5 6.5L4 4L1.5 6.5L4 4L1.5 1.5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center right calc(0.375em + 0.1875rem);
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  padding-right: calc(1.5em + 0.75rem);
+  /* Necesario para el icono */
 }
 
 /* Mostrar el mensaje de error sólo si el campo es inválido */
-.is-invalid ~ .invalid-feedback {
-    display: block;
+.is-invalid~.invalid-feedback {
+  display: block;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
-    background: linear-gradient(135deg, #232526 0%, #414345 100%);
-    background-size: cover; 
-    background-position: center;
-    background-repeat: no-repeat;
-        font-family: 'Poppins', sans-serif;
-    
-    padding-top: 80px; 
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Poppins', sans-serif;
+  padding-top: 80px;
 
-    color: #eeeeee; 
+  color: #eeeeee;
 }
 
-h1, h2, h3, h4 {
+
+/* Subtítulos o textos secundarios (text-muted) */
+.text-muted {
+  color: #a0a0a0 !important;
+}
+
+
+h1 {
+    color: #00adb5; 
+    text-shadow: 1px 1px 2px rgba(230, 223, 223, 0.5); 
+}
+
+
+h2, h3, h4 {
     color: #00adb5; 
 }
 
 h5, h6, p, label, li {
-    color: #eeeeee; /* Texto general más claro para el tema oscuro */
-    font-weight: 500; 
+    color: #c1c8ce; 
+    font-weight: 500;
 }
-
-/* Subtítulos o textos secundarios (text-muted) */
-.text-muted {
-    color: #a0a0a0 !important; 
-}
-
-
 h5, h6 {
-    font-weight: 600; 
-    color: #00adb5; /
+    font-weight: 600;
+    color: #e2dcdc; /* Casi negro para mejor visibilidad */
 }
 
 /* Etiquetas del formulario */
 .form-label {
-    font-weight: 500;
-    color: #eeeeee; 
+  font-weight: 500;
+  color: #eeeeee;
 }
 
 
 .accordion .card {
-    background: #222831; 
-    border: none;
-    border-radius: 18px; 
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12); 
-    margin-bottom: 15px; 
-    overflow: hidden; 
+  background: #222831;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  margin-bottom: 15px;
+  overflow: hidden;
 }
 
 .accordion .card-header {
-    background: #393e46; 
-    border-bottom: none;
-    padding: 0; 
+  background: #393e46;
+  border-bottom: none;
+  padding: 0;
 }
 
 .accordion .card-header button {
-    color: #00adb5; 
-    font-weight: 700;
-    padding: 1rem 1.25rem; /* Padding dentro del botón */
-    text-align: left;
-    text-decoration: none;
-    box-shadow: none !important; 
-    border-radius: 18px; 
-    transition: background 0.2s; 
+  color: #00adb5;
+  font-weight: 700;
+  padding: 1rem 1.25rem;
+  /* Padding dentro del botón */
+  text-align: left;
+  text-decoration: none;
+  box-shadow: none !important;
+  border-radius: 18px;
+  transition: background 0.2s;
 }
 
 .accordion .card-header button:hover {
-    background: rgba(0, 173, 181, 0.1); /* Ligero resplandor al pasar el ratón */
-    color: #00adb5; /* Mantiene el color del texto */
+  background: rgba(0, 173, 181, 0.1);
+  /* Ligero resplandor al pasar el ratón */
+  color: #00adb5;
+  /* Mantiene el color del texto */
 }
 
 .accordion .card-header button.collapsed {
-    color: #eeeeee; 
-    background: transparent;
+  color: #eeeeee;
+  background: transparent;
 }
 
 .accordion .card-header button.collapsed:hover {
-    background: rgba(238, 238, 238, 0.05); 
+  background: rgba(238, 238, 238, 0.05);
 }
 
 .accordion .card-body {
-    background: #222831; 
-    color: #eeeeee; 
-    padding: 1.25rem;
+  background: #222831;
+  color: #eeeeee;
+  padding: 1.25rem;
 }
 
 /* Estilo para las imágenes de métodos de pago */
 .card-body img {
-    border-radius: 8px; 
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
-    transition: transform 0.2s;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
 }
 
 .card-body img:hover {
-    transform: scale(1.1); 
+  transform: scale(1.1);
 }
 
 /* Estilo para el formulario de contacto */
 .form-control {
-    background-color: #393e46; 
-    border: 1px solid #414345; 
-    color: #eeeeee;
-    border-radius: 8px; 
+  background-color: #393e46;
+  border: 1px solid #414345;
+  color: #eeeeee;
+  border-radius: 8px;
 }
 
 .form-control:focus {
-    background-color: #393e46;
-    border-color: #00adb5; 
-    box-shadow: 0 0 0 0.2rem rgba(0, 173, 181, 0.25); 
-    color: #eeeeee;
+  background-color: #393e46;
+  border-color: #00adb5;
+  box-shadow: 0 0 0 0.2rem rgba(0, 173, 181, 0.25);
+  color: #eeeeee;
 }
 
 /* Botón de enviar del formulario */
 .btn-primary {
-    background-color: #00adb5; 
-    border-color: #00adb5; 
-    font-weight: 700;
-    border-radius: 8px; 
-    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  background-color: #00adb5;
+  border-color: #00adb5;
+  font-weight: 700;
+  border-radius: 8px;
+  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
 .btn-primary:hover {
-    background-color: #008f95; 
-    border-color: #008f95;
-    box-shadow: 0 4px 12px rgba(0, 173, 181, 0.3); 
+  background-color: #008f95;
+  border-color: #008f95;
+  box-shadow: 0 4px 12px rgba(0, 173, 181, 0.3);
 }
 
 /* Footer general */
 footer {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background: #232526 !important; 
-    color: #fff;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    text-align: center;
-    padding: 18px 0;
-    margin-top: auto;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #232526 !important;
+  color: #fff;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 18px 0;
+  margin-top: auto;
 }
 
 /* Ajustes responsivos generales para el contenido principal */
 @media (max-width: 768px) {
-    .container {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    h1 {
-        font-size: 2rem;
-    }
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
 }
