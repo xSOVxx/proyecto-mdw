@@ -2,17 +2,44 @@ package com.example.proyecto_mdw.model;
 
 import java.util.List;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "ranking_items")
 public class RankingItem {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String nombre;
+    
+    @Column(length = 1000)
     private String descripcion;
+    
     private String imagen;
+    
     private int ranking;
+    
     private String genero;
+    
+    @ElementCollection
+    @CollectionTable(name = "ranking_plataformas", joinColumns = @JoinColumn(name = "ranking_item_id"))
+    @Column(name = "plataforma")
     private List<String> plataforma;
+    
     private String lanzamiento;
+    
     private double calificacion;
+    
     private String enlace;
     
     // Constructor vacío
