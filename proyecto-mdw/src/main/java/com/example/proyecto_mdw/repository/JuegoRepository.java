@@ -9,3 +9,6 @@ import com.example.proyecto_mdw.model.Juego;
 public interface JuegoRepository extends JpaRepository<Juego, Long> {
     // Métodos de consulta de JPA se generan automáticamente
 }
+
+
+
