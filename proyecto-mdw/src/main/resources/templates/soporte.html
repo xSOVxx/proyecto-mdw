@@ -1,213 +1,187 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soporte GridGames</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Íconos (opcional) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!-- Tu CSS personalizado (opcional) -->
-    <link rel="stylesheet" href="/static/css/soporte.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/soporte.css}">    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
 <body>
-    <div class="d-flex flex-column min-vh-100">
-
-        <header>
-            <!-- Barra de navegación -->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body fixed-top">
-                <div class="container">
-                    <a class="navbar-brand" href="/">
-                        <img src="https://png.pngtree.com/png-vector/20190716/ourlarge/pngtree-video-game-icon-trendy-style-isolated-background-png-image_1543043.jpg"
-                            width="70" height="50">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarEpic">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarEpic">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/soporte">Soporte</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/ranking">Ranking</a></li>
-                            <li class="nav-item">
-                                <button type="button" class="btn btn-secondary" onclick="location.href='/login'">
-                                    Iniciar Sesión
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body fixed-top shadow">
+            <div class="container">
+                <a class="navbar-brand" href="/"> <img
+                        src="https://png.pngtree.com/png-vector/20190716/ourlarge/pngtree-video-game-icon-trendy-style-isolated-background-png-image_1543043.jpg"
+                        width="60" height="45" alt="Logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarEpic"
+                    aria-controls="navbarEpic" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarEpic">
+                    <ul class="navbar-nav ms-auto">
+                        
+                        <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/soporte}">Soporte</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/ranking}">Ranking</a></li>
+                        
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-secondary ms-lg-3 mt-2 mt-lg-0"
+                                onclick="location.href='/login'">
+                                Iniciar Sesión
+                            </button>
+                        </li>
+                    </ul>
                 </div>
-            </nav>
-        </header>
-        <div class="container">
-            <h5 class="text-start text-muted mt-3 ms-2">Centro de Soporte de GridGames</h5>
-            <p class="text-start text-muted mt-3 ms-2">¿Tienes un problema o una pregunta? Podemos ayudarte.</p>
+            </div>
+        </nav>
+    </header>
 
+    <main class="container mt-4">
+
+        <div th:if="${mensajeExito}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${mensajeExito}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${mensajeError}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${mensajeError}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
+        <h1 class="text-center mb-4">Centro de Soporte de GridGames 🎮</h1>
+        <p class="text-center text-muted mb-5">¿Tienes un problema o una pregunta? Podemos ayudarte.</p>
 
+        <div class="accordion" id="faqAccordion">
 
-        <main class="container my-5 flex-grow-1">
-            <h6 class="text-start mb-1">SELECCIONA UNA CATEGORIA</h6>
-            <div class="accordion" id="accordionSoporte">
-                <!-- Compras -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingCompras">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseCompras" aria-expanded="true" aria-controls="collapseCompras">
+            <div class="card">
+                <div class="card-header" id="headingCompras">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                            data-target="#collapseCompras" aria-expanded="true" aria-controls="collapseCompras">
                             Compras
                         </button>
                     </h2>
-                    <div id="collapseCompras" class="accordion-collapse collapse" aria-labelledby="headingCompras"
-                        data-bs-parent="#accordionSoporte">
-                        <div class="accordion-body">
-                            <p><strong>Métodos de pago:</strong> Aceptamos tarjetas de crédito (Visa, MasterCard),
-                                tarjetas de débito, pagos por PayPal y billeteras virtuales.
-                            <div class="text-center my-3">
-
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa"
-                                    width="50" height="20" class="mx-2">
-
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png"
-                                    alt="MasterCard" width="50" height="20" class="mx-2">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal"
-                                    width="50" height="20" class="mx-2">.
-                                </p>
+                </div>
+                <div id="collapseCompras" class="collapse show" aria-labelledby="headingCompras"
+                    data-parent="#faqAccordion">
+                    <div class="card-body">
+                        <h5>Métodos de Pago</h5>
+                        <div class="d-flex flex-wrap">
+                            <div th:each="metodo : ${soporte.compras.metodos_pago}" class="mr-3 mb-3">
+                                <img th:src="${metodo.logo}" alt="Logo de método de pago"
+                                    style="width: 50px; height: auto;">
+                                <p class="text-muted" th:text="${metodo.metodo}"></p>
                             </div>
-
-                            <p><strong>Facturación:</strong> Una vez realizada la compra, recibirás automáticamente una
-                                factura al correo electrónico registrado.</p>
                         </div>
+                        <h5>Facturación</h5>
+                        <p th:text="${soporte.compras.facturacion}"></p>
                     </div>
                 </div>
+            </div>
 
-                <!-- Mi cuenta -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingCuenta">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseCuenta" aria-expanded="false" aria-controls="collapseCuenta">
-                            Mi cuenta
+            <div class="card">
+                <div class="card-header" id="headingCuenta">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseCuenta" aria-expanded="false" aria-controls="collapseCuenta">
+                            Mi Cuenta
                         </button>
                     </h2>
-                    <div id="collapseCuenta" class="accordion-collapse collapse" aria-labelledby="headingCuenta"
-                        data-bs-parent="#accordionSoporte">
-                        <div class="accordion-body">
-                            <ul>
-                                <li><strong>Cambiar tu contraseña:</strong> Por seguridad, recomendamos actualizar tu
-                                    contraseña cada cierto tiempo. Puedes hacerlo desde la sección de configuración de
-                                    tu cuenta.</li>
-                                <li><strong>Actualizar tus datos personales:</strong> Modifica tu nombre, correo
-                                    electrónico u otros datos en cualquier momento desde el panel de usuario.</li>
-                                <li><strong>Cerrar sesión:</strong> Si estás en un dispositivo compartido, recuerda
-                                    cerrar sesión desde el menú principal para proteger tu información.</li>
-                            </ul>
-
-                            <p>Si tienes problemas para acceder a tu cuenta, puedes restablecer tu contraseña usando el
-                                enlace "¿Olvidaste tu contraseña?" en la <a href="index.html"
-                                    class="text-decoration-underline text-primary">pagina de inicio</a> de sesión.</p>
-                        </div>
+                </div>
+                <div id="collapseCuenta" class="collapse" aria-labelledby="headingCuenta" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        <h5>Cambiar Contraseña</h5>
+                        <p th:text="${soporte.cuenta.cambiar_contrasena}"></p>
+                        <h5>Actualizar Datos</h5>
+                        <p th:text="${soporte.cuenta.actualizar_datos}"></p>
+                        <h5>Cerrar Sesión</h5>
+                        <p th:text="${soporte.cuenta.cerrar_sesion}"></p>
                     </div>
                 </div>
+            </div>
 
-                <!-- Juegos -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingJuegos">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseJuegos" aria-expanded="false" aria-controls="collapseJuegos">
+            <div class="card">
+                <div class="card-header" id="headingJuegos">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseJuegos" aria-expanded="false" aria-controls="collapseJuegos">
                             Juegos
                         </button>
                     </h2>
-                    <div id="collapseJuegos" class="accordion-collapse collapse" aria-labelledby="headingJuegos"
-                        data-bs-parent="#accordionSoporte">
-                        <div class="accordion-body">
-                            Aquí puedes encontrar información sobre:
-                            <ul>
-                                <li><strong>Descargas:</strong> Aprende cómo descargar e instalar tus juegos favoritos.
-                                </li>
-                                <li><strong>Errores frecuentes:</strong> Encuentra soluciones para los errores más
-                                    comunes durante la instalación o el juego.</li>
-                                <li><strong>Actualizaciones:</strong> Mantén tus juegos actualizados para disfrutar de
-                                    nuevas características y mejoras.</li>
-                            </ul>
-                        </div>
+                </div>
+                <div id="collapseJuegos" class="collapse" aria-labelledby="headingJuegos" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        <h5>Descargas</h5>
+                        <p th:text="${soporte.juegos.descargas}"></p>
+                        <h5>Errores Frecuentes</h5>
+                        <p th:text="${soporte.juegos.errores_frecuentes}"></p>
+                        <h5>Actualizaciones</h5>
+                        <p th:text="${soporte.juegos.actualizaciones}"></p>
                     </div>
                 </div>
+            </div>
 
-                <!-- Contacto -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingContacto">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseContacto" aria-expanded="false" aria-controls="collapseContacto">
+            <div class="card">
+                <div class="card-header" id="headingContacto">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseContacto" aria-expanded="false" aria-controls="collapseContacto">
                             Contacto
                         </button>
                     </h2>
-                    <div id="collapseContacto" class="accordion-collapse collapse" aria-labelledby="headingContacto"
-                        data-bs-parent="#accordionSoporte">
-                        <div class="accordion-body">
-                            ¿No encontraste lo que buscabas? Contáctanos a través de nuestro formulario haciendo
-                            <a href="#formularioContacto" class="text-primary text-decoration-underline"> click
-                                aqui.</a>
-                        </div>
+                </div>
+                <div id="collapseContacto" class="collapse" aria-labelledby="headingContacto"
+                    data-parent="#faqAccordion">
+                    <div class="card-body">
+                        <p th:text="${soporte.contacto.mensaje}"></p>
                     </div>
                 </div>
             </div>
-            <!-- Aquí pondremos el formulario de contacto luego -->
 
-            <div class="mt-5" id="formularioContacto">
-                <h6 class="mb-3">¿Necesitas más ayuda? Escríbenos aquí:</h6>
-                <form novalidate>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="email" placeholder="aa@bb" required>
+        </div>
+
+        <section class="mt-5 mb-5 p-4 border rounded">
+
+            <h2 class="text-center mb-4">¿Necesitas más ayuda? Escríbenos aquí:</h2>
+            <form action="#" th:action="@{/soporte/enviar}" method="post" class="nedds-validation" novalidate>
+                <div class="form-group mb-3">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="email"name="email" placeholder="tu@ejemplo.com" required>
+                    Porfavor, introduce un correo electronico valido
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <div class="invalid-feedback">
+                        Porfavor, introduce tu contraseña.
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="password" placeholder="Tu contraseña" required
-                            minlength="8" maxlength="16">
+                    <div class="form-group mb-3">
+                        <label for="message" class="form-label">Tu Mensaje</label>
+                        <textarea class="form-control" id="message" name="message" rows="5"
+                            placeholder="Describe tu problema o pregunta aquí..." required></textarea>
                         <div class="invalid-feedback">
-                            La contraseña debe tener entre 8 y 16 caracteres.
+                            Porfavor, describe tu mensaje.
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="mensaje" class="form-label">Mensaje</label>
-                        <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..."
-                            required minlength="10"></textarea>
-                        <div class="invalid-feedback">
-                            El mensaje debe tener al menos 10 caracteres.
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+            </form>
+        </section>
 
-                    <button type="submit" class="btn btn-primary mb-5">Enviar</button>
-                </form>
-            </div>
-        </main>
+    </main>
 
+    <footer class="bg-dark text-white text-center p-3 mt-5">
+        <p>Proyecto Marcos de Desarrollo Web - 2025</p>
+    </footer>
 
-        <!-- FOOTER -->
-
-
-
-        <footer class="bg-dark text-white text-center py-3">
-            <small>&copy; Proyecto Marcos de Desarrollo Web - 2025</small>
-        </footer>
-
-        <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-
-        <!-- Tu JavaScript personalizado (opcional) -->
-        <script src="/static/js/soporte.js" defer></script>
-
-
-    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/soporte.js}"></script>
 
 </body>
 
