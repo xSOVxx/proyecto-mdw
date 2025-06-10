@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.example.proyecto_mdw.model.Juego;
@@ -14,6 +15,7 @@ import com.example.proyecto_mdw.repository.JuegoRepository;
 import com.example.proyecto_mdw.repository.RankingRepository;
 
 @Component
+@Profile("!production") // Solo se ejecuta en perfiles que no sean producción
 public class DataLoader implements CommandLineRunner {
 
     @Autowired
