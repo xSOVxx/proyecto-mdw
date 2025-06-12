@@ -27,51 +27,72 @@ public class RankingItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    // NOMBRE - OBLIGATORIO
     @NotBlank(message = "El nombre del juego es obligatorio")
     @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
     @Column(nullable = false, length = 100)
     private String nombre;
     
+    // DESCRIPCIÓN - OBLIGATORIO
     @NotBlank(message = "La descripción es obligatoria") 
     @Size(min = 10, max = 1000, message = "La descripción debe tener entre 10 y 1000 caracteres")
     @Column(nullable = false, length = 1000)
     private String descripcion;
     
+    // IMAGEN - OPCIONAL
+    @Size(max = 255, message = "La URL de la imagen no puede exceder 255 caracteres")
     @Column(length = 255)
     private String imagen;
     
+    // RANKING - OBLIGATORIO Y ÚNICO
     @NotNull(message = "La posición en el ranking es obligatoria")
     @Min(value = 1, message = "El ranking debe ser mayor a 0")
     @Max(value = 1000, message = "El ranking no puede ser mayor a 1000")
     @Column(nullable = false, unique = true)
     private Integer ranking;
     
+    // GÉNERO - OBLIGATORIO
     @NotBlank(message = "El género es obligatorio")
-    @Size(max = 50, message = "El género no puede exceder 50 caracteres")
+    @Size(min = 2, max = 50, message = "El género debe tener entre 2 y 50 caracteres")
     @Column(nullable = false, length = 50)
     private String genero;
     
+    // PLATAFORMAS - LISTA (puede estar vacía)
     @ElementCollection
     @CollectionTable(name = "ranking_plataformas", joinColumns = @JoinColumn(name = "ranking_item_id"))
     @Column(name = "plataforma")
     private List<String> plataforma;
     
-    @Size(max = 20, message = "La fecha de lanzamiento no puede exceder 20 caracteres")
-    @Column(length = 20)
+    // FECHA LANZAMIENTO - OBLIGATORIO
+    @NotBlank(message = "La fecha de lanzamiento es obligatoria")
+    @Size(min = 4, max = 20, message = "La fecha debe tener entre 4 y 20 caracteres")
+    @Column(nullable = false, length = 20)
     private String lanzamiento;
     
+    // CALIFICACIÓN - OBLIGATORIO
     @NotNull(message = "La calificación es obligatoria")
     @DecimalMin(value = "0.0", message = "La calificación debe ser mayor o igual a 0")
     @DecimalMax(value = "10.0", message = "La calificación no puede ser mayor a 10")
     @Column(nullable = false)
     private Double calificacion;
     
+    // ENLACE - OPCIONAL
     @Size(max = 255, message = "El enlace no puede exceder 255 caracteres")
     @Column(length = 255)
     private String enlace;
     
     // Constructor vacío
     public RankingItem() {}
+    
+    // Constructor con campos obligatorios
+    public RankingItem(String nombre, String descripcion, Integer ranking, String genero, String lanzamiento, Double calificacion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.ranking = ranking;
+        this.genero = genero;
+        this.lanzamiento = lanzamiento;
+        this.calificacion = calificacion;
+    }
     
     // Getters y Setters
     public Long getId() {
@@ -152,5 +173,10 @@ public class RankingItem {
     
     public void setEnlace(String enlace) {
         this.enlace = enlace;
+    }
+    
+    @Override
+    public String toString() {
+        return "RankingItem [id=" + id + ", nombre=" + nombre + ", ranking=" + ranking + ", genero=" + genero + ", calificacion=" + calificacion + "]";
     }
 }
