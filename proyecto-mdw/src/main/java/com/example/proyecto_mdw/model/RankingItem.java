@@ -11,6 +11,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "ranking_items")
@@ -20,15 +27,28 @@ public class RankingItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotBlank(message = "El nombre del juego es obligatorio")
+    @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
+    @Column(nullable = false, length = 100)
     private String nombre;
     
-    @Column(length = 1000)
+    @NotBlank(message = "La descripción es obligatoria") 
+    @Size(min = 10, max = 1000, message = "La descripción debe tener entre 10 y 1000 caracteres")
+    @Column(nullable = false, length = 1000)
     private String descripcion;
     
+    @Column(length = 255)
     private String imagen;
     
-    private int ranking;
+    @NotNull(message = "La posición en el ranking es obligatoria")
+    @Min(value = 1, message = "El ranking debe ser mayor a 0")
+    @Max(value = 1000, message = "El ranking no puede ser mayor a 1000")
+    @Column(nullable = false, unique = true)
+    private Integer ranking;
     
+    @NotBlank(message = "El género es obligatorio")
+    @Size(max = 50, message = "El género no puede exceder 50 caracteres")
+    @Column(nullable = false, length = 50)
     private String genero;
     
     @ElementCollection
@@ -36,10 +56,18 @@ public class RankingItem {
     @Column(name = "plataforma")
     private List<String> plataforma;
     
+    @Size(max = 20, message = "La fecha de lanzamiento no puede exceder 20 caracteres")
+    @Column(length = 20)
     private String lanzamiento;
     
-    private double calificacion;
+    @NotNull(message = "La calificación es obligatoria")
+    @DecimalMin(value = "0.0", message = "La calificación debe ser mayor o igual a 0")
+    @DecimalMax(value = "10.0", message = "La calificación no puede ser mayor a 10")
+    @Column(nullable = false)
+    private Double calificacion;
     
+    @Size(max = 255, message = "El enlace no puede exceder 255 caracteres")
+    @Column(length = 255)
     private String enlace;
     
     // Constructor vacío
@@ -78,11 +106,11 @@ public class RankingItem {
         this.imagen = imagen;
     }
     
-    public int getRanking() {
+    public Integer getRanking() {
         return ranking;
     }
     
-    public void setRanking(int ranking) {
+    public void setRanking(Integer ranking) {
         this.ranking = ranking;
     }
     
@@ -110,11 +138,11 @@ public class RankingItem {
         this.lanzamiento = lanzamiento;
     }
     
-    public double getCalificacion() {
+    public Double getCalificacion() {
         return calificacion;
     }
     
-    public void setCalificacion(double calificacion) {
+    public void setCalificacion(Double calificacion) {
         this.calificacion = calificacion;
     }
     
