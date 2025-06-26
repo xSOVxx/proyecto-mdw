@@ -70,6 +70,7 @@ public class AdminJuegosController {
         }
     }
     
+    // Solo modificar la parte del método guardarJuego para no actualizar JSON
     @PostMapping("/guardar")
     public String guardarJuego(
             @ModelAttribute Juego juego,

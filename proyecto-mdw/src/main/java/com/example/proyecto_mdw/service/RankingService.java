@@ -1,55 +1,55 @@
 package com.example.proyecto_mdw.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.proyecto_mdw.model.RankingItem;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.proyecto_mdw.repository.RankingRepository;
 
 @Service
 public class RankingService {
 
-    private static final String RANKING_JSON_PATH = "static/data/ranking.json";
+    @Autowired
+    private RankingRepository rankingRepository;
     
     /**
-     * Obtiene la lista completa de juegos rankeados desde el archivo JSON
+     * Obtiene la lista completa de juegos rankeados
      */
     public List<RankingItem> obtenerTodosLosJuegosRankeados() {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            InputStream is = new ClassPathResource(RANKING_JSON_PATH).getInputStream();
-            return mapper.readValue(is, new TypeReference<List<RankingItem>>() {});
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
+        return rankingRepository.findAllByOrderByRankingAsc();
     }
     
     /**
      * Busca un juego específico por su ranking
      */
     public Optional<RankingItem> buscarPorRanking(int ranking) {
-        List<RankingItem> juegos = obtenerTodosLosJuegosRankeados();
-        return juegos.stream()
-                .filter(juego -> juego.getRanking() == ranking)
-                .findFirst();
+        return rankingRepository.findByRanking(ranking);
     }
     
     /**
      * Busca un juego específico por su nombre
      */
     public Optional<RankingItem> buscarPorNombre(String nombre) {
-        List<RankingItem> juegos = obtenerTodosLosJuegosRankeados();
-        return juegos.stream()
-                .filter(juego -> juego.getNombre().equalsIgnoreCase(nombre))
-                .findFirst();
+        return rankingRepository.findByNombreIgnoreCase(nombre);
     }
     
+    /**
+     * Guarda un nuevo juego en el ranking o actualiza uno existente
+     */
+    @Transactional
+    public RankingItem guardar(RankingItem item) {
+        return rankingRepository.save(item);
+    }
+    
+    /**
+     * Elimina un juego del ranking
+     */
+    @Transactional
+    public void eliminar(Long id) {
+        rankingRepository.deleteById(id);
+    }
 }

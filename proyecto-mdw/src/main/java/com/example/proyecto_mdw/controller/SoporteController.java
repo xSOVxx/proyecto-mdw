@@ -1,4 +1,4 @@
-package com.example.proyecto_mdw.controller;
+/* package com.example.proyecto_mdw.controller;
 
 import com.example.proyecto_mdw.model.SoporteModel;
 import com.example.proyecto_mdw.model.MensajeContacto;
@@ -71,3 +71,5 @@ public class SoporteController {
         return "redirect:/soporte";
     }
 }
+
+*/
