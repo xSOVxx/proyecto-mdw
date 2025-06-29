@@ -1,4 +1,4 @@
-/* package com.example.proyecto_mdw.controller;
+ package com.example.proyecto_mdw.controller;
 
 import com.example.proyecto_mdw.model.SoporteModel;
 import com.example.proyecto_mdw.model.MensajeContacto;
@@ -16,11 +16,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 @Controller
 public class SoporteController {
 
     @Autowired
     private MensajeContactoRepository mensajeContactoRepository;
+
+     @Autowired
+     private PasswordEncoder passwordEncoder;
 
     private static final String RUTA_SOPORTE_JSON = "/static/data/soporte.json";
 
@@ -54,7 +59,9 @@ public class SoporteController {
             RedirectAttributes redirectAttributes) {
 
         try {
-            MensajeContacto nuevoMensaje = new MensajeContacto(email, password, mensaje);
+            String hashedPassword = passwordEncoder.encode(password);
+
+            MensajeContacto nuevoMensaje = new MensajeContacto(email, hashedPassword, mensaje); // Pasa el hashedPassword
 
             mensajeContactoRepository.save(nuevoMensaje);
 
@@ -63,13 +70,12 @@ public class SoporteController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("mensajeError",
-                    "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo.");
+            redirectAttributes.addFlashAttribute("mensajeError", "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo.");
             System.err.println("Error al guardar mensaje de contacto en la base de datos: " + e.getMessage());
         }
 
         return "redirect:/soporte";
+    
     }
 }
 
-*/
