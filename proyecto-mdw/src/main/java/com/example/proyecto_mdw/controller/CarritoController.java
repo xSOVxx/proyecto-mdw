@@ -3,6 +3,7 @@ package com.example.proyecto_mdw.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,129 +23,91 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/carrito")
 public class CarritoController {
-    
     @Autowired
     private CarritoService carritoService;
-    
-    /**
-     * Agregar producto al carrito (AJAX)
-     */
+
+    @Value("${paypal.client-id:AelS8gq3hUVJNm7nq1gnACJIohbWJgQ-vXYoV1pCIiyEDbrrTLGc_E9Z-kyluWsf0GGp7cr90nXlpUVj}")
+    private String paypalClientId;
+
     @PostMapping("/agregar/{juegoId}")
     @ResponseBody
     public ResponseEntity<?> agregarAlCarrito(@PathVariable Long juegoId, HttpSession session) {
         try {
             String sessionId = session.getId();
             carritoService.agregarAlCarrito(juegoId, sessionId);
-            
-            // Devolver información actualizada del carrito
             Long cantidadItems = carritoService.obtenerCantidadItems(sessionId);
             Double total = carritoService.calcularTotal(sessionId);
-            
-            return ResponseEntity.ok()
-                .body(new CarritoResponse("Producto agregado al carrito", cantidadItems, total));
-                
+            return ResponseEntity.ok(new CarritoResponse("Producto agregado", cantidadItems, total));
         } catch (Exception e) {
-            return ResponseEntity.badRequest()
-                .body(new CarritoResponse("Error al agregar producto: " + e.getMessage(), 0L, 0.0));
+            return ResponseEntity.badRequest().body(new CarritoResponse("Error: " + e.getMessage(), 0L, 0.0));
         }
     }
-    
-    /**
-     * Mostrar carrito completo
-     */
+
     @GetMapping("/ver")
     public String verCarrito(HttpSession session, Model model) {
         String sessionId = session.getId();
         List<CarritoItem> items = carritoService.obtenerItemsCarrito(sessionId);
         Double total = carritoService.calcularTotal(sessionId);
         
+        // Debug logging
+        System.out.println("PayPal Client ID: " + paypalClientId);
+        System.out.println("Total del carrito: " + total);
+        System.out.println("Cantidad de items: " + items.size());
+        
         model.addAttribute("items", items);
-        model.addAttribute("total", total);
+        model.addAttribute("total", total != null ? total : 0.0);
         model.addAttribute("cantidadItems", items.size());
+        model.addAttribute("paypalClientId", paypalClientId);
         
         return "carrito";
     }
-    
-    /**
-     * Actualizar cantidad de un item
-     */
+
     @PostMapping("/actualizar/{itemId}")
-    public String actualizarCantidad(@PathVariable Long itemId, 
-                                   @RequestParam Integer cantidad,
-                                   RedirectAttributes redirectAttributes) {
+    public String actualizarCantidad(@PathVariable Long itemId, @RequestParam Integer cantidad, RedirectAttributes redirectAttributes) {
         try {
+            if (cantidad < 1 || cantidad > 10) {
+                throw new IllegalArgumentException("La cantidad debe estar entre 1 y 10");
+            }
             carritoService.actualizarCantidad(itemId, cantidad);
-            redirectAttributes.addFlashAttribute("mensaje", "Cantidad actualizada correctamente");
+            redirectAttributes.addFlashAttribute("mensaje", "Cantidad actualizada");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al actualizar cantidad: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Error: " + e.getMessage());
         }
         return "redirect:/carrito/ver";
     }
-    
-    /**
-     * Eliminar item del carrito
-     */
+
     @PostMapping("/eliminar/{itemId}")
     public String eliminarDelCarrito(@PathVariable Long itemId, RedirectAttributes redirectAttributes) {
         try {
             carritoService.eliminarDelCarrito(itemId);
-            redirectAttributes.addFlashAttribute("mensaje", "Producto eliminado del carrito");
+            redirectAttributes.addFlashAttribute("mensaje", "Producto eliminado");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al eliminar producto: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Error: " + e.getMessage());
         }
         return "redirect:/carrito/ver";
     }
-    
-    /**
-     * Vaciar carrito completo
-     */
+
     @PostMapping("/vaciar")
     public String vaciarCarrito(HttpSession session, RedirectAttributes redirectAttributes) {
         try {
             String sessionId = session.getId();
             carritoService.vaciarCarrito(sessionId);
-            redirectAttributes.addFlashAttribute("mensaje", "Carrito vaciado correctamente");
+            redirectAttributes.addFlashAttribute("mensaje", "Carrito vaciado");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al vaciar carrito: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Error: " + e.getMessage());
         }
         return "redirect:/carrito/ver";
     }
-    
-    /**
-     * Obtener información del carrito (AJAX) - para el contador en el navbar
-     */
+
     @GetMapping("/info")
     @ResponseBody
     public ResponseEntity<CarritoResponse> obtenerInfoCarrito(HttpSession session) {
         String sessionId = session.getId();
         Long cantidadItems = carritoService.obtenerCantidadItems(sessionId);
         Double total = carritoService.calcularTotal(sessionId);
-        
         return ResponseEntity.ok(new CarritoResponse("OK", cantidadItems, total));
     }
-    
-    /**
-     * Proceder al checkout (PayPal)
-     */
-    @GetMapping("/checkout")
-    public String procederCheckout(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
-        String sessionId = session.getId();
-        
-        if (carritoService.estaVacio(sessionId)) {
-            redirectAttributes.addFlashAttribute("error", "El carrito está vacío");
-            return "redirect:/carrito/ver";
-        }
-        
-        List<CarritoItem> items = carritoService.obtenerItemsCarrito(sessionId);
-        Double total = carritoService.calcularTotal(sessionId);
-        
-        model.addAttribute("items", items);
-        model.addAttribute("total", total);
-        
-        return "checkout";
-    }
-    
-    // Clase para respuestas AJAX
+
     public static class CarritoResponse {
         private String mensaje;
         private Long cantidadItems;
@@ -160,5 +123,10 @@ public class CarritoController {
         public String getMensaje() { return mensaje; }
         public Long getCantidadItems() { return cantidadItems; }
         public Double getTotal() { return total; }
+        
+        // Setters (opcional)
+        public void setMensaje(String mensaje) { this.mensaje = mensaje; }
+        public void setCantidadItems(Long cantidadItems) { this.cantidadItems = cantidadItems; }
+        public void setTotal(Double total) { this.total = total; }
     }
 }
