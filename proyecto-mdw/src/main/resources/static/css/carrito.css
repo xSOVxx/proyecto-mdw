@@ -1,0 +1,145 @@
+/* CSS específico para tu navbar */
+.navbar.navbar-expand-lg.navbar-dark.bg-dark.border-bottom.border-body.fixed-top.shadow {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 20px; /* Esto no funciona con fixed-top, usar las opciones de abajo */
+}
+
+/* O más simple, targeting solo la clase navbar */
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 20px;
+}
+
+/* Para empujar el contenido hacia abajo (recomendado con fixed-top) */
+body {
+    padding-top: 90px; /* Altura del navbar + espacio extra */
+}
+
+/* Personalización adicional del navbar */
+.navbar {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #495057;
+}
+
+/* Mejoras visuales opcionales */
+.navbar-brand img {
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.05);
+}
+
+.nav-link {
+    transition: color 0.2s ease;
+    padding: 8px 16px !important;
+}
+
+.nav-link:hover {
+    color: #ffc107 !important;
+}
+
+.btn-secondary {
+    border-radius: 25px;
+    padding: 8px 20px;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* Nuevo diseño CSS para el carrito de compras */
+.carrito-container {
+    background: #f8f9fa;
+    padding: 2rem 0;
+}
+.carrito-card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+}
+.carrito-titulo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 1.5rem;
+}
+.carrito-item {
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+}
+.carrito-item:last-child {
+    border-bottom: none;
+}
+.carrito-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+}
+.carrito-nombre {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+.carrito-categoria {
+    font-size: 0.9rem;
+    color: #888;
+}
+.carrito-cantidad {
+    width: 60px;
+    text-align: center;
+    border-radius: 0.3rem;
+    border: 1px solid #ced4da;
+    margin: 0 0.5rem;
+}
+.carrito-precio, .carrito-subtotal {
+    font-weight: 600;
+    color: #007bff;
+}
+.carrito-btn {
+    border-radius: 0.3rem;
+    font-size: 0.95rem;
+    margin-left: 0.5rem;
+}
+.carrito-resumen {
+    background: #f1f3f4;
+    border-radius: 0.7rem;
+    padding: 1.2rem;
+    margin-top: 1.5rem;
+}
+.carrito-total {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #28a745;
+}
+@media (max-width: 768px) {
+    .carrito-item { flex-direction: column; align-items: flex-start; }
+    .carrito-img { margin-bottom: 0.7rem; }
+}
+
+
+navbar {
+    background: #343a40;
+    padding: 1rem;
+}
+
+
+
+footer {
+    background: #343a40;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
