@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - GridGames</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/checkout.css">
+    <!-- PayPal SDK configurado para mostrar PayPal + Tarjeta como opciones separadas -->
+    <script th:src="'https://www.paypal.com/sdk/js?client-id=' + ${paypalClientId} + '&currency=' + ${paypalCurrency} + '&components=buttons,marks&enable-funding=card&disable-funding=credit,bancontact,eps,giropay,ideal,mercadopago,mybank,p24,sepa,sofort&locale=es_ES'"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body fixed-top shadow">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="https://png.pngtree.com/png-vector/20190716/ourlarge/pngtree-video-game-icon-trendy-style-isolated-background-png-image_1543043.jpg"
+                    width="60" height="45" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/soporte">Soporte</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/ranking">Ranking</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/juegos">Juegos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/carrito/ver">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a></li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-secondary ms-lg-3 mt-2 mt-lg-0"
+                            onclick="location.href='/login'">
+                            Iniciar Sesión
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0">
+                            <i class="fas fa-credit-card me-2"></i>Finalizar Compra
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Resumen del pedido -->
+                            <div class="col-md-6">
+                                <h5>Resumen del Pedido</h5>
+                                <div class="border rounded p-3 mb-3">
+                                    <div th:each="item : ${items}" class="d-flex justify-content-between align-items-center mb-2">
+                                        <div>
+                                            <strong th:text="${item.juego.nombre}">Juego</strong>
+                                            <span class="text-muted"> x [[${item.cantidad}]]</span>
+                                        </div>
+                                        <span th:text="'S/. ' + ${#numbers.formatDecimal(item.subtotal, 0, 2)}">S/. 0.00</span>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex justify-content-between">
+                                        <strong>Total:</strong>
+                                        <strong th:text="'S/. ' + ${#numbers.formatDecimal(total, 0, 2)}">S/. 0.00</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Información de facturación -->
+                            <div class="col-md-6">
+                                <h5>Información de Facturación</h5>
+                                <form id="checkoutForm">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="nombre" class="form-label">Nombre</label>
+                                            <input type="text" class="form-control" id="nombre" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="apellido" class="form-label">Apellido</label>
+                                            <input type="text" class="form-control" id="apellido" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="pais" class="form-label">País</label>
+                                        <select class="form-select" id="pais" required>
+                                            <option value="">Seleccionar país</option>
+                                            <option value="PE">Perú</option>
+                                            <option value="US">Estados Unidos</option>
+                                            <option value="MX">México</option>
+                                            <option value="CO">Colombia</option>
+                                            <option value="AR">Argentina</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Métodos de pago -->
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="mb-3">Método de Pago</h5>
+                                
+                                <!-- Alerta informativa de seguridad -->
+                                <div class="alert alert-info">
+                                    <i class="fas fa-shield-alt me-2"></i>
+                                    <strong>Modo Sandbox - Múltiples Métodos de Pago:</strong> 
+                                    <ul class="mb-0 mt-2">
+                                        <li>Al hacer clic en "Pagar", se abrirá un modal de PayPal</li>
+                                        <li><strong>Opciones disponibles:</strong> PayPal, Tarjetas de Crédito/Débito, Venmo</li>
+                                        <li>Puedes elegir entre "Pagar con PayPal" o "Pagar con Tarjeta"</li>
+                                        <li>Esta es una simulación - no se harán cargos reales</li>
+                                        <li>Solo se usa el Client ID público de PayPal para máxima seguridad</li>
+                                        <li><strong>Credenciales de prueba PayPal:</strong> sb-buyer@personal.example.com / password123</li>
+                                    </ul>
+                                </div>
+
+                                <!-- PayPal Payment Marks (para mostrar logos de métodos) -->
+                                <div class="mb-3">
+                                    <h6>Métodos de pago aceptados:</h6>
+                                    <div id="paypal-marks-container" class="d-flex flex-wrap gap-2 mb-3"></div>
+                                </div>
+
+                                <!-- Botón de PayPal -->
+                                <div id="paypal-button-container" class="mb-2"></div>
+                                
+                                <!-- Separador con texto "o" -->
+                                <div class="text-center my-2">
+                                    <span class="badge bg-secondary">o</span>
+                                </div>
+                                
+                                <!-- Botón de Tarjeta de Crédito/Débito -->
+                                <div id="card-button-container" class="mb-3"></div>
+                                
+                                <!-- Texto informativo -->
+                                <div class="text-center text-muted small mb-3">
+                                    <i class="fas fa-credit-card me-1"></i>
+                                    Tarjeta de débito o crédito
+                                    <br>
+                                    <small>Desarrollado por <strong>PayPal</strong></small>
+                                </div>
+
+                                <!-- Separador -->
+                                <hr class="my-4">
+
+                                <!-- Botón de Pago Simulado para Sandbox -->
+                                <div class="text-center mb-3">
+                                    <h6 class="mb-3">O simula un pago directo (Solo para pruebas)</h6>
+                                    <button type="button" class="btn btn-success btn-lg" onclick="simularPagoExitoso()">
+                                        <i class="fas fa-check-circle me-2"></i>Simular Pago Exitoso (Sandbox)
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-lg ms-2" onclick="simularPagoFallido()">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>Simular Pago Fallido
+                                    </button>
+                                </div>
+
+                                <!-- Información adicional de tarjetas de prueba -->
+                                <div class="alert alert-secondary">
+                                    <i class="fas fa-credit-card me-2"></i>
+                                    <strong>Tarjetas de Prueba (Sandbox):</strong>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <strong>Visa:</strong> 4032039135884086<br>
+                                            <strong>Mastercard:</strong> 5374242789826322<br>
+                                            <strong>American Express:</strong> 375680603374299
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>CVV:</strong> Cualquier 3-4 dígitos<br>
+                                            <strong>Fecha:</strong> Cualquier fecha futura<br>
+                                            <strong>Nombre:</strong> Cualquier nombre
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Opciones adicionales -->
+                                <div class="text-center">
+                                    <a href="/carrito/ver" class="btn btn-outline-secondary me-2">
+                                        <i class="fas fa-arrow-left me-2"></i>Volver al Carrito
+                                    </a>
+                                    <button type="button" class="btn btn-outline-danger" onclick="cancelarCompra()">
+                                        <i class="fas fa-times me-2"></i>Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal de éxito -->
+                <div class="modal fade" id="exitoModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-success text-white">
+                                <h5 class="modal-title">
+                                    <i class="fas fa-check-circle me-2"></i>¡Compra Exitosa!
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                                <h4>¡Gracias por tu compra!</h4>
+                                <p>Tu pedido ha sido procesado exitosamente. Recibirás un email con los enlaces de descarga.</p>
+                                <p><strong>ID de Transacción:</strong> <span id="transactionId"></span></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onclick="irAMisJuegos()">
+                                    <i class="fas fa-gamepad me-2"></i>Ir a Mis Juegos
+                                </button>
+                                <a href="/juegos" class="btn btn-outline-secondary">
+                                    <i class="fas fa-shopping-bag me-2"></i>Seguir Comprando
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Configuración de PayPal Marks (NO necesarios para el layout deseado)
+        // Se comenta para lograr el efecto de la imagen 2
+        
+        // Configuración de PayPal Buttons - Layout como imagen 2
+        paypal.Buttons({
+            style: {
+                layout: 'vertical',    // Botones uno encima del otro
+                color: 'gold',         // Color dorado para PayPal
+                shape: 'rect',         // Forma rectangular
+                label: 'paypal',       // Etiqueta PayPal
+                height: 50,           // Altura de botones
+                tagline: false        // Sin eslogan
+            },
+            
+            // Renderizar botón de PayPal
+            createOrder: function(data, actions) {
+                if (!validarFormulario()) {
+                    return false;
+                }
+                
+                const total = /*[[${total}]]*/ 0;
+                
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: total.toFixed(2),
+                            currency_code: 'USD'
+                        },
+                        description: 'Compra de juegos en GridGames - Sandbox Mode'
+                    }],
+                    application_context: {
+                        brand_name: 'GridGames Store',
+                        landing_page: 'LOGIN', // Importante: LOGIN muestra el modal completo
+                        user_action: 'PAY_NOW',
+                        shipping_preference: 'NO_SHIPPING',
+                        payment_method: {
+                            payee_preferred: 'UNRESTRICTED' // Permite PayPal y tarjetas
+                        }
+                    }
+                });
+            },
+            
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    console.log('Transacción completada:', details);
+                    
+                    // Mostrar información del método de pago usado
+                    const paymentMethod = details.payment_source || details.payer.funding_instruments[0];
+                    console.log('Método de pago usado:', paymentMethod);
+                    
+                    // Enviar datos al servidor para completar el proceso
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '/pago/success';
+                    
+                    const paymentIdInput = document.createElement('input');
+                    paymentIdInput.type = 'hidden';
+                    paymentIdInput.name = 'paymentId';
+                    paymentIdInput.value = details.id;
+                    
+                    const payerIdInput = document.createElement('input');
+                    payerIdInput.type = 'hidden';
+                    payerIdInput.name = 'payerId';
+                    payerIdInput.value = details.payer.payer_id;
+                    
+                    form.appendChild(paymentIdInput);
+                    form.appendChild(payerIdInput);
+                    document.body.appendChild(form);
+                    form.submit();
+                });
+            },
+            
+            onError: function(err) {
+                console.error('Error en el pago:', err);
+                alert('Ocurrió un error al procesar el pago. Por favor, inténtalo de nuevo.');
+            },
+            
+            onCancel: function(data) {
+                console.log('Pago cancelado:', data);
+                alert('El pago fue cancelado.');
+            }
+            
+        }).render('#paypal-button-container');
+        
+        // Segundo botón específico para tarjetas de crédito/débito
+        paypal.Buttons({
+            style: {
+                layout: 'horizontal',
+                color: 'white',       // Color blanco/gris para tarjetas
+                shape: 'rect',
+                label: 'pay',         // Etiqueta genérica de pagar
+                height: 50,
+                tagline: false
+            },
+            
+            fundingSource: paypal.FUNDING.CARD, // Solo tarjetas
+            
+            createOrder: function(data, actions) {
+                if (!validarFormulario()) {
+                    return false;
+                }
+                
+                const total = /*[[${total}]]*/ 0;
+                
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: total.toFixed(2),
+                            currency_code: 'USD'
+                        },
+                        description: 'Compra de juegos en GridGames - Pago con Tarjeta'
+                    }],
+                    application_context: {
+                        brand_name: 'GridGames',
+                        landing_page: 'BILLING',
+                        user_action: 'PAY_NOW'
+                    }
+                });
+            },
+            
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    console.log('Pago con tarjeta completado:', details);
+                    
+                    // Enviar datos al servidor
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '/pago/success';
+                    
+                    const paymentIdInput = document.createElement('input');
+                    paymentIdInput.type = 'hidden';
+                    paymentIdInput.name = 'paymentId';
+                    paymentIdInput.value = details.id;
+                    
+                    const payerIdInput = document.createElement('input');
+                    payerIdInput.type = 'hidden';
+                    payerIdInput.name = 'payerId';
+                    payerIdInput.value = details.payer.payer_id;
+                    
+                    form.appendChild(paymentIdInput);
+                    form.appendChild(payerIdInput);
+                    document.body.appendChild(form);
+                    form.submit();
+                });
+            },
+            
+            onError: function(err) {
+                console.error('Error en el pago con tarjeta:', err);
+                alert('Ocurrió un error al procesar el pago con tarjeta. Por favor, inténtalo de nuevo.');
+            },
+            
+            onCancel: function(data) {
+                console.log('Pago con tarjeta cancelado:', data);
+                alert('El pago con tarjeta fue cancelado.');
+            }
+            
+        }).render('#card-button-container');
+        
+        function validarFormulario() {
+            const form = document.getElementById('checkoutForm');
+            const inputs = form.querySelectorAll('input[required], select[required]');
+            
+            for (let input of inputs) {
+                if (!input.value.trim()) {
+                    input.focus();
+                    input.classList.add('is-invalid');
+                    alert('Por favor, completa todos los campos obligatorios.');
+                    return false;
+                } else {
+                    input.classList.remove('is-invalid');
+                    input.classList.add('is-valid');
+                }
+            }
+            return true;
+        }
+        
+        function vaciarCarrito() {
+            fetch('/carrito/vaciar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
+        }
+        
+        function cancelarCompra() {
+            if (confirm('¿Estás seguro de que quieres cancelar la compra?')) {
+                window.location.href = '/carrito/ver';
+            }
+        }
+        
+        function irAMisJuegos() {
+            // Aquí podrías redirigir a una página de "Mis Juegos"
+            window.location.href = '/juegos';
+        }
+        
+        // Funciones de simulación de pago para sandbox
+        function simularPagoExitoso() {
+            if (!validarFormulario()) {
+                return;
+            }
+            
+            if (confirm('¿Deseas simular un pago exitoso? (Solo para pruebas)')) {
+                // Generar ID de transacción simulada
+                const transactionId = 'SIM-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                
+                // Crear formulario para enviar al servidor
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/pago/success';
+                
+                const paymentIdInput = document.createElement('input');
+                paymentIdInput.type = 'hidden';
+                paymentIdInput.name = 'paymentId';
+                paymentIdInput.value = transactionId;
+                
+                const payerIdInput = document.createElement('input');
+                payerIdInput.type = 'hidden';
+                payerIdInput.name = 'payerId';
+                payerIdInput.value = 'SIM-PAYER-' + Math.random().toString(36).substr(2, 9);
+                
+                form.appendChild(paymentIdInput);
+                form.appendChild(payerIdInput);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+        
+        function simularPagoFallido() {
+            if (confirm('¿Deseas simular un pago fallido? (Solo para pruebas)')) {
+                alert('❌ Simulación de pago fallido: La transacción no pudo ser procesada. Por favor, inténtalo de nuevo.');
+            }
+        }
+        
+        // Validación en tiempo real
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('#checkoutForm input, #checkoutForm select');
+            
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    if (this.hasAttribute('required')) {
+                        if (this.value.trim()) {
+                            this.classList.remove('is-invalid');
+                            this.classList.add('is-valid');
+                        } else {
+                            this.classList.remove('is-valid');
+                            this.classList.add('is-invalid');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
