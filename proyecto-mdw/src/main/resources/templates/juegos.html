@@ -29,6 +29,15 @@
                     <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="/juegos">Juegos</a></li>
 
+                    <!-- Carrito de compras -->
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="/carrito/ver" id="carritoNav">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle" 
+                                  id="carritoContador" style="display: none;">0</span>
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <button type="button" class="btn btn-secondary ms-lg-3 mt-2 mt-lg-0"
                             onclick="location.href='/login'">
@@ -199,7 +208,9 @@
                                     <span class="precio" th:unless="${juego.precio != null}">
                                         S/. 59.99
                                     </span>
-                                    <button class="btn btn-primary">
+                                    <button class="btn btn-primary agregar-carrito-btn" 
+                                            th:data-juego-id="${juego.id}"
+                                            th:data-juego-nombre="${juego.nombre}">
                                         <i class="fas fa-shopping-cart me-2"></i>Agregar
                                     </button>
                                 </div>
@@ -212,6 +223,90 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script para el carrito de compras -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar información del carrito al iniciar
+            actualizarInfoCarrito();
+            
+            // Agregar event listeners a todos los botones de agregar al carrito
+            document.querySelectorAll('.agregar-carrito-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const juegoId = this.getAttribute('data-juego-id');
+                    const juegoNombre = this.getAttribute('data-juego-nombre');
+                    agregarAlCarrito(juegoId, juegoNombre);
+                });
+            });
+        });
+        
+        function agregarAlCarrito(juegoId, juegoNombre) {
+            fetch('/carrito/agregar/' + juegoId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.cantidadItems !== undefined) {
+                    // Actualizar contador del carrito
+                    actualizarContadorCarrito(data.cantidadItems);
+                    
+                    // Mostrar notificación de éxito
+                    mostrarNotificacion('✅ ' + juegoNombre + ' agregado al carrito', 'success');
+                } else {
+                    mostrarNotificacion('❌ ' + data.mensaje, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarNotificacion('❌ Error al agregar producto al carrito', 'error');
+            });
+        }
+        
+        function actualizarInfoCarrito() {
+            fetch('/carrito/info')
+            .then(response => response.json())
+            .then(data => {
+                actualizarContadorCarrito(data.cantidadItems);
+            })
+            .catch(error => {
+                console.error('Error al cargar info del carrito:', error);
+            });
+        }
+        
+        function actualizarContadorCarrito(cantidad) {
+            const contador = document.getElementById('carritoContador');
+            if (cantidad > 0) {
+                contador.textContent = cantidad;
+                contador.style.display = 'inline';
+            } else {
+                contador.style.display = 'none';
+            }
+        }
+        
+        function mostrarNotificacion(mensaje, tipo) {
+            // Crear elemento de notificación
+            const notificacion = document.createElement('div');
+            notificacion.className = `alert alert-${tipo === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
+            notificacion.style.cssText = 'top: 80px; right: 20px; z-index: 9999; max-width: 350px;';
+            notificacion.innerHTML = `
+                ${mensaje}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            // Agregar al DOM
+            document.body.appendChild(notificacion);
+            
+            // Auto-eliminar después de 3 segundos
+            setTimeout(() => {
+                if (notificacion.parentNode) {
+                    notificacion.remove();
+                }
+            }, 3000);
+        }
+    </script>
 </body>
 
 </html>

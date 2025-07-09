@@ -82,12 +82,12 @@ public class AuthController {
             return "register";
         }
 
-        if (usuarioRepository.findByUsuario(usuario).isPresent() || usuarioRepository.findByCorreo(correo).isPresent()) {
+        if (usuarioRepository.findByUsername(usuario).isPresent() || usuarioRepository.findByCorreo(correo).isPresent()) {
             model.addAttribute("errorRegistro", "El usuario o el correo electrónico ya están registrados.");
             return "register";
         }
 
-        usuarioRepository.save(new Usuario(usuario, correo, contrasena));
+        usuarioRepository.save(new Usuario());
         model.addAttribute("mensajeRegistroExitoso", "¡Registro exitoso! Ahora puedes iniciar sesión.");
         return "login";
     }
