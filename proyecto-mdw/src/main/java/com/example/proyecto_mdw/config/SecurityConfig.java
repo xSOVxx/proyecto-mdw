@@ -12,17 +12,18 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher; 
 
 @Configuration //anotacion que le dice a spring que busque beans en esta clase
-@EnableWebSecurity 
+@EnableWebSecurity //enciende spring security
 public class SecurityConfig {
 
-    @Bean 
+    @Bean //metodo que crea objeto de la clase BCryptPasswordEncoder
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); 
     }
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { 
+        //configura las reglas de seguridad http para la app web
         http
             .authorizeHttpRequests(authorize -> authorize
                 .anyRequest().permitAll() 
@@ -42,6 +43,6 @@ public class SecurityConfig {
         );
 
 
-        return http.build();
+        return http.build(); //convierte todo en filtro de seguridad
     }
 }
