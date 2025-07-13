@@ -1,5 +1,6 @@
 package com.example.proyecto_mdw.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -9,34 +10,48 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.example.proyecto_mdw.security.CustomSuccessHandler;
+
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+
+    @Autowired
+    private CustomSuccessHandler successHandler;
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)
-            throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/home", "/css/**", "/js/**",
-                                "/images/**", "/error",
-                                "/login")
-                        .permitAll() // Agregar "/error"
-                        .requestMatchers("/register/**", "/edit/**",
-                                "/delete/**")
-                        .hasRole("REGISTRADOR")
-                        .requestMatchers("/places").hasAnyRole("REGISTRADOR",
-                                "CONSULTOR")
-                        .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/places")
-                        .permitAll())
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/")
-                        .permitAll());
+            .csrf(csrf -> csrf
+                .ignoringRequestMatchers("/h2-console/**")
+                .disable()
+            )
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/juegos", "/ranking" ).permitAll()
+                .requestMatchers("/admin/**").hasRole("GESTORJUEGOS")
+                .requestMatchers( "/perfil").hasRole("USER")
+                .anyRequest().hasRole("USER")
+                
+            )
+            .headers(headers -> headers
+                .frameOptions(frame -> frame.disable())
+            )
+            .formLogin(form -> form
+                .loginPage("/login")
+                .usernameParameter("correo")            // Campo de formulario
+                .passwordParameter("password")        // Campo de formulario
+                .successHandler(successHandler)         // Usar tu CustomSuccessHandler
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .permitAll()
+            )
+            .exceptionHandling(exception -> exception
+                .accessDeniedPage("/error/403")
+            );
+
         return http.build();
     }
 
@@ -45,3 +60,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+

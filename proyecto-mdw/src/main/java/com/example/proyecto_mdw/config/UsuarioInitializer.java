@@ -1,6 +1,8 @@
 package com.example.proyecto_mdw.config;
 
 import java.util.HashSet;
+import java.util.Optional; // Import Optional for findByUsername
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +14,6 @@ import com.example.proyecto_mdw.repository.RoleRepository;
 import com.example.proyecto_mdw.repository.UsuarioRepository;
 
 import jakarta.annotation.PostConstruct;
-import java.util.HashSet;
 
 @Component
 public class UsuarioInitializer {
@@ -26,43 +27,46 @@ public class UsuarioInitializer {
 
     @PostConstruct
     public void init() {
-        // Primero verifica si ya existe el rol
-        Role registradorRole = roleRepository.findByName("");
-        if (registradorRole == null) {
-            registradorRole = new Role();
-            registradorRole.setName("");
-            roleRepository.save(registradorRole);
+        Role userRole = findOrCreateRole("ROLE_USER");
+        Role gestorJuegosRole = findOrCreateRole("ROLE_GESTORJUEGOS");       
+        
+        Optional<Usuario> regularUserOptional = userRepository.findByUsername("user");
+        if (regularUserOptional.isEmpty()) {
+            Usuario user = new Usuario();
+            user.setUsername("user");
+            user.setCorreo("user@example.com");
+            user.setContrasena(passwordEncoder.encode("userpassword")); 
+            Set<Role> userRoles = new HashSet<>();
+            userRoles.add(userRole);
+            user.setRoles(userRoles);
+            userRepository.save(user);
+            System.out.println("Usuario regular creado por defecto.");
+        } else {
+            System.out.println("El usuario regular ya existe.");
         }
-        Role consultorRole = roleRepository.findByName("");
-        if (consultorRole == null) {
-            consultorRole = new Role();
-            consultorRole.setName("");
-            roleRepository.save(consultorRole);
-        }
-        // Luego verifica si existe el usuario admin
-        if (!userRepository.existsById("")) {
-            // Usuario admin = new Usuario();
-            // admin.setUsername("admin");
-            // admin.setPassword(passwordEncoder.encode("admin123"));
-            // admin.setEmail("admin@example.com");
-            // admin.setEnabled(true);
-            // admin.setRoles(new HashSet<>());
-            // admin.getRoles().add(registradorRole);
-            // userRepository.save(admin);
-            // System.out.println("Usuario admin creado exitosamente");
-        }
-        // Crear un usuario consultor de prueba
-        if (!userRepository.existsById("")) {
-            // Usuario consultor = new Usuario();
-            // consultor.setUsername("consultor");
-            // consultor.setPassword(passwordEncoder.encode("consultor123")); // La contraseña será "consultor123"
-            // consultor.setEmail("consultor@example.com");
-            // consultor.setEnabled(true);
-            // consultor.setRoles(new HashSet<>());
-            // consultor.getRoles().add(consultorRole);
-            // userRepository.save(consultor);
-            // System.out.println("Usuario consultor creado exitosamente");
+
+        // --- 4. Create Default GestorJuegos User ---
+        Optional<Usuario> gestorUserOptional = userRepository.findByUsername("gestor");
+        if (gestorUserOptional.isEmpty()) {
+            Usuario gestor = new Usuario();
+            gestor.setUsername("gestor");
+            gestor.setCorreo("gestor@example.com");
+            gestor.setContrasena(passwordEncoder.encode("gestorpassword")); 
+            Set<Role> gestorRoles = new HashSet<>();
+            gestorRoles.add(gestorJuegosRole); 
+            gestor.setRoles(gestorRoles);
+            userRepository.save(gestor);
+            System.out.println("Usuario gestorJuegos creado por defecto.");
+        } else {
+            System.out.println("El usuario gestorJuegos ya existe.");
         }
     }
 
+    private Role findOrCreateRole(String roleName) {
+        return roleRepository.findByName(roleName)
+                .orElseGet(() -> {
+                    Role newRole = new Role(roleName);
+                    return roleRepository.save(newRole);
+                });
+    }
 }

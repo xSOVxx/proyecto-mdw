@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -17,36 +18,43 @@
 
 <body>
     <header>
-        <!-- Barra de navegación -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="#">
                     <img src="https://png.pngtree.com/png-vector/20190716/ourlarge/pngtree-video-game-icon-trendy-style-isolated-background-png-image_1543043.jpg"
-                        width="70" height="50">
+                         width="70" height="50">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarEpic">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarEpic">
                     <ul class="navbar-nav ms-auto">
-                        <!--    <li class="nav-item"><a class="nav-link" href="#">Noticias</a></li>-->
                         <li class="nav-item"><a class="nav-link" href="/juegos">Juegos</a></li>
                         <li class="nav-item"><a class="nav-link" href="/soporte">Soporte</a></li>
                         <li class="nav-item"><a class="nav-link" href="/ranking">Ranking</a></li>
 
-                        <!-- Carrito de compras -->
                         <li class="nav-item">
                             <a class="nav-link position-relative" href="/carrito/ver" id="carritoNav">
                                 <i class="fas fa-shopping-cart"></i>
-                                <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle" 
+                                <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle"
                                       id="carritoContador" style="display: none;">0</span>
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <button type="button" class="btn btn-secondary" onclick="location.href='login'">
+                        <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <button type="button" class="btn btn-secondary" onclick="location.href='/login'">
                                 Iniciar Sesión
                             </button>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <button type="button" class="btn btn-primary" onclick="location.href='/perfil'">
+                                Ver Perfil
+                            </button>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <form th:action="@{/logout}" method="post" class="ms-2">
+                                <button type="submit" class="btn btn-outline-light">Cerrar Sesión</button>
+                            </form>
                         </li>
                     </ul>
                 </div>

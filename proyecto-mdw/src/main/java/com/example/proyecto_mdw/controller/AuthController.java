@@ -2,7 +2,15 @@ package com.example.proyecto_mdw.controller;
 
 import com.example.proyecto_mdw.model.Usuario;
 import com.example.proyecto_mdw.repository.UsuarioRepository;
+import com.example.proyecto_mdw.model.Role;
+import com.example.proyecto_mdw.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +29,12 @@ public class AuthController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
     private boolean validarCorreo(String correo) {
         String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Pattern pattern = Pattern.compile(regex);
@@ -27,9 +42,9 @@ public class AuthController {
         return matcher.matches();
     }
 
-    private boolean validarContrasena(String contrasena) {
-        return contrasena != null && contrasena.length() >= 6;
-    }
+    // private boolean validarContrasena(String contrasena) {
+    //     return contrasena != null && contrasena.length() >= 6;
+    // }
 
     @GetMapping("/register")
     public String mostrarRegistro() {
@@ -87,7 +102,15 @@ public class AuthController {
             return "register";
         }
 
-        usuarioRepository.save(new Usuario());
+        String contrasenaCifrada = passwordEncoder.encode(contrasena);
+        Usuario nuevoUsuario = new Usuario(usuario, correo, contrasenaCifrada);
+
+        // Asignar rol USER
+        Role userRole = roleRepository.findByName("ROLE_USER")
+            .orElseGet(() -> roleRepository.save(new Role("ROLE_USER")));
+        nuevoUsuario.getRoles().add(userRole);
+
+        usuarioRepository.save(nuevoUsuario);
         model.addAttribute("mensajeRegistroExitoso", "¡Registro exitoso! Ahora puedes iniciar sesión.");
         return "login";
     }
@@ -97,23 +120,29 @@ public class AuthController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String loginUsuario(@RequestParam String correo,
-                               @RequestParam String contrasena,
-                               Model model,
-                               RedirectAttributes redirectAttributes) {
-        List<Usuario> usuarios = usuarioRepository.findAll();
-        Usuario usuarioAutenticado = usuarios.stream()
-                .filter(u -> u.getCorreo().equals(correo) && u.getContrasena().equals(contrasena))
-                .findFirst()
-                .orElse(null);
+    // @PostMapping("/login")
+    // public String loginUsuario(@RequestParam String correo,
+    //                        @RequestParam String contrasena,
+    //                        Model model,
+    //                        RedirectAttributes redirectAttributes) {
+    // Optional<Usuario> usuarioOpt = usuarioRepository.findByCorreo(correo);
 
-        if (usuarioAutenticado != null) {
-            redirectAttributes.addFlashAttribute("mensajeLoginExitoso", "¡Inicio de sesión exitoso!");
-            return "redirect:/";
-        } else {
-            model.addAttribute("errorLogin", "Correo electrónico o contraseña incorrectos.");
-            return "login";
-        }
-    }
+    // if (usuarioOpt.isPresent()) {
+    //     Usuario usuario = usuarioOpt.get();
+
+    //     if (passwordEncoder.matches(contrasena, usuario.getContrasena())) {
+    //         // Autenticación manual en el contexto de Spring Security
+    //         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    //         Authentication auth = new UsernamePasswordAuthenticationToken(usuario.getCorreo(), null, authorities);
+    //         SecurityContextHolder.getContext().setAuthentication(auth);
+
+    //         redirectAttributes.addFlashAttribute("mensajeLoginExitoso", "¡Inicio de sesión exitoso!");
+    //         return "redirect:/";
+    //     }
+    // }
+
+    // model.addAttribute("errorLogin", "Correo electrónico o contraseña incorrectos.");
+    //return "login";
+//}
+
 }

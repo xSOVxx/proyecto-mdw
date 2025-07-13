@@ -9,7 +9,7 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" th:href="@{/css/login.css}">
+  <link rel="stylesheet" href="/css/login.css">
 </head>
 
 <body>
@@ -41,7 +41,7 @@
             alt="Imagen de login">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-          <form th:action="@{/login}" method="post">
+          <form action="/login" method="post">
             <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
               <p class="lead fw-normal mb-0 me-3">Ingresa con</p>
               <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-floating mx-1">
@@ -67,7 +67,7 @@
 
             <div data-mdb-input-init class="form-outline mb-3">
               <input type="password" id="formContrasena" class="form-control form-control-lg"
-                placeholder="Ingresa tu contraseña" name="contrasena" required />
+                placeholder="Ingresa tu contraseña" name="password" required />
               <label class="form-label" for="formContrasena">Contraseña</label>
             </div>
 

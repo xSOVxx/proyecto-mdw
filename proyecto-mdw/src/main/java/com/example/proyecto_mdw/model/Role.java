@@ -66,6 +66,4 @@ public class Role {
         return super.toString();
     }
 
-    
-
 }
