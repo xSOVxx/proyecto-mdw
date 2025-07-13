@@ -1,4 +1,4 @@
-/*package com.example.proyecto_mdw.model;
+package com.example.proyecto_mdw.model;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty; // Importar si los nombres del JSON no coinciden con las variables
@@ -145,4 +145,4 @@ public class SoporteModel{
         }
     }
 }
-    */
+    
