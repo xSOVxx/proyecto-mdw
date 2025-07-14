@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,13 +58,15 @@ public class AdminJuegosController {
     @GetMapping("/editar/{id}")
     public String mostrarEditar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
-            Juego juego = juegoService.buscarPorId(id)
-                .orElseThrow(() -> new Exception("No se encontró el juego con ID: " + id));
-            
-            model.addAttribute("juego", juego);
-            model.addAttribute("juegos", juegoService.listarTodos());
-            
-            return "admin";
+            Optional<Juego> juegoOpt = juegoService.buscarPorId(id);
+            if (juegoOpt.isPresent()) {
+                model.addAttribute("juego", juegoOpt.get());
+                model.addAttribute("juegos", juegoService.listarTodos());
+                return "admin";
+            } else {
+                redirectAttributes.addFlashAttribute("error", "No se encontró el juego con ID: " + id);
+                return "redirect:/admin";
+            }
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error: " + e.getMessage());
             return "redirect:/admin";
