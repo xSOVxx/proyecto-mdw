@@ -31,11 +31,20 @@
                         <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/soporte}">Soporte</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/ranking}">Ranking</a></li>
                         
-                        <li class="nav-item">
-                            <button type="button" class="btn btn-secondary ms-lg-3 mt-2 mt-lg-0"
-                                onclick="location.href='/login'">
+                        <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <button type="button" class="btn btn-secondary" onclick="location.href='/login'">
                                 Iniciar Sesión
                             </button>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <button type="button" class="btn btn-primary" onclick="location.href='/perfil'">
+                                Ver Perfil
+                            </button>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <form th:action="@{/logout}" method="post" class="ms-2">
+                                <button type="submit" class="btn btn-outline-light">Cerrar Sesión</button>
+                            </form>
                         </li>
                     </ul>
                 </div>

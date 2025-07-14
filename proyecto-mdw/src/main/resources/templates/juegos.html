@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 
 <head>
     <meta charset="UTF-8">
@@ -26,23 +28,36 @@
                     <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="/soporte">Soporte</a></li>
                     <li class="nav-item"><a class="nav-link" href="/ranking">Ranking</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_GESTORJUEGOS')">
+                        <a class="nav-link" href="/admin">Admin</a>
+                    </li>
+
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="/juegos">Juegos</a></li>
 
                     <!-- Carrito de compras -->
                     <li class="nav-item">
                         <a class="nav-link position-relative" href="/carrito/ver" id="carritoNav">
                             <i class="fas fa-shopping-cart"></i>
-                            <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle" 
-                                  id="carritoContador" style="display: none;">0</span>
+                            <span
+                                class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle"
+                                id="carritoContador" style="display: none;">0</span>
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-secondary ms-lg-3 mt-2 mt-lg-0"
-                            onclick="location.href='/login'">
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <button type="button" class="btn btn-secondary" onclick="location.href='/login'">
                             Iniciar Sesión
                         </button>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <button type="button" class="btn btn-primary" onclick="location.href='/perfil'">
+                            Ver Perfil
+                        </button>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post" class="ms-2">
+                            <button type="submit" class="btn btn-outline-light">Cerrar Sesión</button>
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -94,8 +109,8 @@
                             <label class="form-check-label" for="deportes">Deportes</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="estrategia" name="categoria" value="Estrategia"
-                                th:checked="${categoriaSeleccionada == 'Estrategia'}">
+                            <input class="form-check-input" type="radio" id="estrategia" name="categoria"
+                                value="Estrategia" th:checked="${categoriaSeleccionada == 'Estrategia'}">
                             <label class="form-check-label" for="estrategia">Estrategia</label>
                         </div>
                     </div>
@@ -103,7 +118,8 @@
                     <div class="mb-4">
                         <h5>Plataforma</h5>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="todas-plataformas" name="plataforma" value=""
+                            <input class="form-check-input" type="radio" id="todas-plataformas" name="plataforma"
+                                value=""
                                 th:checked="${plataformaSeleccionada == null || plataformaSeleccionada.isEmpty()}">
                             <label class="form-check-label" for="todas-plataformas">Todas</label>
                         </div>
@@ -113,18 +129,18 @@
                             <label class="form-check-label" for="pc">PC</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="ps5" name="plataforma" value="PlayStation 5"
-                                th:checked="${plataformaSeleccionada == 'PlayStation 5'}">
+                            <input class="form-check-input" type="radio" id="ps5" name="plataforma"
+                                value="PlayStation 5" th:checked="${plataformaSeleccionada == 'PlayStation 5'}">
                             <label class="form-check-label" for="ps5">PlayStation 5</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="xbox" name="plataforma" value="Xbox Series X|S"
-                                th:checked="${plataformaSeleccionada == 'Xbox Series X|S'}">
+                            <input class="form-check-input" type="radio" id="xbox" name="plataforma"
+                                value="Xbox Series X|S" th:checked="${plataformaSeleccionada == 'Xbox Series X|S'}">
                             <label class="form-check-label" for="xbox">Xbox Series X|S</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="switch" name="plataforma" value="Nintendo Switch"
-                                th:checked="${plataformaSeleccionada == 'Nintendo Switch'}">
+                            <input class="form-check-input" type="radio" id="switch" name="plataforma"
+                                value="Nintendo Switch" th:checked="${plataformaSeleccionada == 'Nintendo Switch'}">
                             <label class="form-check-label" for="switch">Nintendo Switch</label>
                         </div>
                     </div>
@@ -173,30 +189,27 @@
                     <div th:each="juego : ${juegos}" class="col-md-6 col-lg-4">
                         <div class="card h-100 game-card">
                             <!-- Si la imagen empieza con http, usarla directamente, de lo contrario buscarla en la carpeta images -->
-                            <img th:if="${juego.imagen != null && juego.imagen.startsWith('http')}" 
-                                 th:src="${juego.imagen}" 
-                                 class="card-img-top" 
-                                 th:alt="${juego.nombre}">
-                            <img th:if="${juego.imagen != null && !juego.imagen.startsWith('http')}" 
-                                 th:src="@{'/images/' + ${juego.imagen}}" 
-                                 class="card-img-top" 
-                                 th:alt="${juego.nombre}">
+                            <img th:if="${juego.imagen != null && juego.imagen.startsWith('http')}"
+                                th:src="${juego.imagen}" class="card-img-top" th:alt="${juego.nombre}">
+                            <img th:if="${juego.imagen != null && !juego.imagen.startsWith('http')}"
+                                th:src="@{'/images/' + ${juego.imagen}}" class="card-img-top" th:alt="${juego.nombre}">
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${juego.nombre}">Nombre del Juego</h5>
                                 <p class="card-text" th:text="${juego.descripcion}">Descripción del juego</p>
-                                
+
                                 <!-- Mostrar categoría -->
                                 <p class="mb-2">
                                     <span class="badge bg-secondary" th:text="${juego.categoria}">Categoría</span>
                                 </p>
-                                
+
                                 <!-- Mostrar plataformas disponibles -->
                                 <div class="mb-2" th:if="${juego.plataformas != null && !juego.plataformas.isEmpty()}">
                                     <small>
-                                        <span th:each="plat : ${juego.plataformas}" class="badge bg-dark me-1" th:text="${plat}">PC</span>
+                                        <span th:each="plat : ${juego.plataformas}" class="badge bg-dark me-1"
+                                            th:text="${plat}">PC</span>
                                     </small>
                                 </div>
-                                
+
                                 <div class="d-flex justify-content-between align-items-center">
                                     <!-- Mostrar el precio del JSON -->
                                     <span class="precio" th:if="${juego.precio != null && juego.precio > 0}">
@@ -208,9 +221,8 @@
                                     <span class="precio" th:unless="${juego.precio != null}">
                                         S/. 59.99
                                     </span>
-                                    <button class="btn btn-primary agregar-carrito-btn" 
-                                            th:data-juego-id="${juego.id}"
-                                            th:data-juego-nombre="${juego.nombre}">
+                                    <button class="btn btn-primary agregar-carrito-btn" th:data-juego-id="${juego.id}"
+                                        th:data-juego-nombre="${juego.nombre}">
                                         <i class="fas fa-shopping-cart me-2"></i>Agregar
                                     </button>
                                 </div>
@@ -223,23 +235,23 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Script para el carrito de compras -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Cargar información del carrito al iniciar
             actualizarInfoCarrito();
-            
+
             // Agregar event listeners a todos los botones de agregar al carrito
             document.querySelectorAll('.agregar-carrito-btn').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     const juegoId = this.getAttribute('data-juego-id');
                     const juegoNombre = this.getAttribute('data-juego-nombre');
                     agregarAlCarrito(juegoId, juegoNombre);
                 });
             });
         });
-        
+
         function agregarAlCarrito(juegoId, juegoNombre) {
             fetch('/carrito/agregar/' + juegoId, {
                 method: 'POST',
@@ -247,35 +259,35 @@
                     'Content-Type': 'application/json',
                 }
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.cantidadItems !== undefined) {
-                    // Actualizar contador del carrito
-                    actualizarContadorCarrito(data.cantidadItems);
-                    
-                    // Mostrar notificación de éxito
-                    mostrarNotificacion('✅ ' + juegoNombre + ' agregado al carrito', 'success');
-                } else {
-                    mostrarNotificacion('❌ ' + data.mensaje, 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                mostrarNotificacion('❌ Error al agregar producto al carrito', 'error');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cantidadItems !== undefined) {
+                        // Actualizar contador del carrito
+                        actualizarContadorCarrito(data.cantidadItems);
+
+                        // Mostrar notificación de éxito
+                        mostrarNotificacion('✅ ' + juegoNombre + ' agregado al carrito', 'success');
+                    } else {
+                        mostrarNotificacion('❌ ' + data.mensaje, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    mostrarNotificacion('❌ Error al agregar producto al carrito', 'error');
+                });
         }
-        
+
         function actualizarInfoCarrito() {
             fetch('/carrito/info')
-            .then(response => response.json())
-            .then(data => {
-                actualizarContadorCarrito(data.cantidadItems);
-            })
-            .catch(error => {
-                console.error('Error al cargar info del carrito:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    actualizarContadorCarrito(data.cantidadItems);
+                })
+                .catch(error => {
+                    console.error('Error al cargar info del carrito:', error);
+                });
         }
-        
+
         function actualizarContadorCarrito(cantidad) {
             const contador = document.getElementById('carritoContador');
             if (cantidad > 0) {
@@ -285,7 +297,7 @@
                 contador.style.display = 'none';
             }
         }
-        
+
         function mostrarNotificacion(mensaje, tipo) {
             // Crear elemento de notificación
             const notificacion = document.createElement('div');
@@ -295,10 +307,10 @@
                 ${mensaje}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             `;
-            
+
             // Agregar al DOM
             document.body.appendChild(notificacion);
-            
+
             // Auto-eliminar después de 3 segundos
             setTimeout(() => {
                 if (notificacion.parentNode) {
